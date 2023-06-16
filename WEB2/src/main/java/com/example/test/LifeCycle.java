@@ -1,25 +1,26 @@
-package com.jsp;
+package com.example.test;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
- * Servlet implementation class Main
+ * Servlet implementation class LifeCycle
  */
-//@WebServlet("/Main")
-public class Main extends HttpServlet {
+public class LifeCycle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Main() {
-        System.out.println("요");
+    public LifeCycle() {
+        super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -28,20 +29,7 @@ public class Main extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-//		System.out.println("doGet");
-//		
-//		response.setContentType("text/html; charset=euc-kr");
-//		PrintWriter pw = response.getWriter();
-//		
-//		pw.println("<html>");
-//		pw.println("<head>");
-//		pw.println("</head>");
-//		pw.println("<body>");
-//		pw.println("< <h1> GET방식으로 호출 </h1> >");
-//		pw.println("</body>");
-//		pw.println("</html>");
-//		
-//		pw.close();
+		System.out.println("------------");
 	}
 
 	/**
@@ -50,6 +38,28 @@ public class Main extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		System.out.println("init");
+	}
+	
+	@Override
+	public void destroy() {
+		super.destroy();
+		System.out.println("destroy");
+	}
+
+	@PostConstruct
+	public void postConstruct() {
+		System.out.println("PostConstruct");
+	}
+	
+	@PreDestroy
+	public void preDestroy() {
+		System.out.println("PreDestroy");
 	}
 
 }

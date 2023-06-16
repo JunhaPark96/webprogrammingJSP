@@ -8,7 +8,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>Main</servlet-name>
-    <url-pattern></url-pattern>
+    <url-pattern>/Main</url-pattern>
   </servlet-mapping>
   <display-name>Web</display-name>
   <welcome-file-list>
