@@ -4,7 +4,6 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
-@WebListener
 public class ContextListenerEx implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
@@ -17,7 +16,4 @@ public class ContextListenerEx implements ServletContextListener {
 		ServletContextListener.super.contextDestroyed(sce);
 		System.out.println("contextDestryed");
 	}
-	
-	
-	
 }
