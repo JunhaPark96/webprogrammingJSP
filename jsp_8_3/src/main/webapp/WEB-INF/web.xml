@@ -4,21 +4,15 @@
 	xmlns:web="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="5.0">
-	<!-- 
-	<listener>
-		<listener-class>ContextListenerEx</listener-class>
-	</listener>
-	 -->
-	
 	<servlet>
 		<description></description>
-		<display-name>ContextListenerEx</display-name>
-		<servlet-name>ContextListenerEx</servlet-name>
-		<servlet-class>ContextListenerEx</servlet-class>
+		<display-name>ListenerTest</display-name>
+		<servlet-name>ListenerTest</servlet-name>
+		<servlet-class>jsp_8_3.ListenerTest</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ContextListenerEx</servlet-name>
-		<url-pattern>/ContextListenerEx</url-pattern>
+		<servlet-name>ListenerTest</servlet-name>
+		<url-pattern>/ListenerTest</url-pattern>
 	</servlet-mapping>
 	<display-name>jsp_8_3</display-name>
 	<welcome-file-list>
@@ -29,4 +23,7 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	<listener>
+		<listener-class>jsp_8_3.ContextListenerEx</listener-class>
+	</listener>
 </web-app>
