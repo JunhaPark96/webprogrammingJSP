@@ -1,8 +1,7 @@
 
 
-import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebInitParam;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,27 +10,25 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Servlet implementation class ServletConEx
+ * Servlet implementation class ServletContextEx
  */
-//@WebServlet(urlPatterns= {"/ServletConEx"}, initParams= {@WebInitParam(name="dbName", value="oracle"), @WebInitParam(name="dbPwd", value="1234")})
-public class ServletConEx extends HttpServlet {
+@WebServlet("/ServletContextEx")
+public class ServletContextEx extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletConEx() {
+    public ServletContextEx() {
         super();
         // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=utf-8");
-		String dbName = getInitParameter("dbName");
-		String dbPwd = getInitParameter("dbPwd");
+		ServletContext sc = getServletContext();
+		String dbName = sc.getInitParameter("dbName");
+		String dbPwd = sc.getInitParameter("dbPwd");
 		System.out.println("dbName : " + dbName + " dbPwd : " + dbPwd);
 		
 		PrintWriter pw = response.getWriter();
