@@ -63,7 +63,7 @@ public class CharacterSetEx extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("EUC-KR");
+		//request.setCharacterEncoding("EUC-KR");
 
         String name = request.getParameter("name");
         String id = request.getParameter("id");
