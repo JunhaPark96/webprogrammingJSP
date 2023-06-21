@@ -7,6 +7,8 @@ C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\
 \Web\src\main\java
 C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1916431675.index
 \jsp_12_2_tags\src\main\java
+C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1565205947.index
+\jsp_13_cookie\src\main\java
 C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2866439974.index
 \jsp_11_1\src\main\java
 C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\25291331.index
