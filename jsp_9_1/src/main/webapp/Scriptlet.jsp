@@ -1,4 +1,4 @@
-<%@page import="java.util.Arrays"%>
+<%@ page import="java.util.Arrays"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
@@ -46,12 +46,13 @@
 	int[] arr = { 10, 20, 30 };
 	out.println(Arrays.toString(arr) + "<br>");
 	%>
-	
+	<!-- HTML 주석입니다 -->
 	=========================================
+	<%-- JSP 주석입니다 --%>
 	<br>
-	<h1>include jsp 페이지</h1><br>
+	<h1>본 jsp 페이지</h1><br>
 	<%@ include file = "directiveEx.jsp" %><br>
-	<h1>다시 include 페이지</h1>
+	<h1>다시 본 페이지</h1>
 
 </body>
 </html>
