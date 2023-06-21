@@ -40,5 +40,7 @@
 	out.println("비밀번호 : " + request.getParameter("passwd") + "<br/>");
 	out.println("취미 : " + Arrays.toString(hobby) + "<br/>");
 	%>
+	
+	
 </body>
 </html>
