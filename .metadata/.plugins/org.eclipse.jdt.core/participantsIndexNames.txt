@@ -15,6 +15,8 @@ C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\
 \jsp_13_cookie\src\main\java
 C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2727910322.index
 \jsp_9_1\src\main\java
+C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\506154923.index
+\jsp_18_database\src\main\java
 C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2835817267.index
 \jsp_15_exception\src\main\java
 C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1916431675.index
