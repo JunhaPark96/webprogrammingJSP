@@ -55,10 +55,15 @@ public class LoginOk extends HttpServlet {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) { // if user exists
-				String name = rs.getString("name"); // assuming the column name for the name is 'name'
+				String name = rs.getString("name"); 
+				String phone = rs.getString("phone");
+				String gender = rs.getString("gender");
 				HttpSession session = request.getSession();
-				session.setAttribute("loginId", id); // set id to session attribute
-				session.setAttribute("loginName", name); // set name to session attribute
+				session.setAttribute("loginId", id);
+				session.setAttribute("loginName", name);
+				session.setAttribute("loginPw", pw);
+				session.setAttribute("loginPhone", phone);
+				session.setAttribute("loginGender", gender);
 				System.out.println("login success");
 				response.sendRedirect("loginResult.jsp");
 			} else {
@@ -79,5 +84,4 @@ public class LoginOk extends HttpServlet {
 			}
 		}
 	}
-
 }

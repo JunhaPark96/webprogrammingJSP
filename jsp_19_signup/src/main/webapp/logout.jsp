@@ -11,8 +11,8 @@
 		session = request.getSession(false);
 		if(session != null){
 			//Remove session attributes
-			session.removeAttribute("loginId");
-			session.removeAttribute("loginName");
+			//session.removeAttribute("loginId");
+			//session.removeAttribute("loginName");
 			//Invalidates this session and unbinds any objects bound to it.
 			session.invalidate();  
 		}

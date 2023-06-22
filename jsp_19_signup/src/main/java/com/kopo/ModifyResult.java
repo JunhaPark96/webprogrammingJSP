@@ -5,20 +5,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import jakarta.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class ModifyResult
- */
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class ModifyResult extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+	private Connection conn;
+    private PreparedStatement pstmt;
+    
     public ModifyResult() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -29,12 +30,53 @@ public class ModifyResult extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+        service(request, response);
+    }
+
+    protected void service(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+
+        String id = (String) request.getSession().getAttribute("loginId"); // get the id from session
+        String pw = request.getParameter("pw");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String gender = request.getParameter("gender");
+
+        String query = "UPDATE member SET pw = ?, name = ?, phone = ?, gender = ? WHERE id = ?"; 
+
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String url = "jdbc:oracle:thin:@192.168.119.119:1521/dink09.dbsvr";
+            String user = "scott";
+            String password = "tiger";
+            conn = DriverManager.getConnection(url, user, password);
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, pw);
+            pstmt.setString(2, name);
+            pstmt.setString(3, phone);
+            pstmt.setString(4, gender);
+            pstmt.setString(5, id);
+            pstmt.executeUpdate();
+
+            HttpSession session = request.getSession();
+            session.setAttribute("loginName", name); // update the name in session
+            System.out.println("update success");
+            response.sendRedirect("modifyResult.jsp");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(pstmt != null) pstmt.close();
+                if(conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }
