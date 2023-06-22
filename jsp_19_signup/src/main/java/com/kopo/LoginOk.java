@@ -5,61 +5,42 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * Servlet implementation class LoginOk
  */
 public class LoginOk extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private String name;
-	private String id;
-	private String pw;
-	private String phone;
-	private String gender;
 
-	private String query;
-	private Connection conn;
-	private Statement stmt;
-	private int rs;
+    private Connection conn;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
 	
     public LoginOk() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		service(request, response);
 	}
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 
-		name = request.getParameter("name");
-		id = request.getParameter("id");
-		pw = request.getParameter("pw");
-		phone = request.getParameter("phone");
-		gender = request.getParameter("gender");
-		query = "insert into member values ('" + id + "', '" + pw + "', '" + name + "', '" + phone + "', '" + gender
-				+ "')";
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		String query = "SELECT * FROM member WHERE id = ? AND pw = ?"; 
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -67,38 +48,36 @@ public class LoginOk extends HttpServlet {
 			String user = "scott";
 			String password = "tiger";
 			conn = DriverManager.getConnection(url, user, password);
-			conn.setAutoCommit(false);
-			stmt = conn.createStatement();
-			int rs = stmt.executeUpdate(query);
 
-			if (rs == 1) {
-				System.out.println("insert success");
-				conn.commit();
-				response.sendRedirect("joinResult.jsp");
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pw);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) { // if user exists
+				String name = rs.getString("name"); // assuming the column name for the name is 'name'
+				HttpSession session = request.getSession();
+				session.setAttribute("loginId", id); // set id to session attribute
+				session.setAttribute("loginName", name); // set name to session attribute
+				System.out.println("login success");
+				response.sendRedirect("loginResult.jsp");
 			} else {
-				System.out.println("insert failed");
-				response.sendRedirect("join.html");
+				System.out.println("login failed");
+				response.sendRedirect("login.html");
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		}
 	}
+
 }

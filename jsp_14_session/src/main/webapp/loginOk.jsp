@@ -9,7 +9,7 @@
 <body>
 	<%!String id;
 	String passwd;%>
-	<h1>로그인 중</h1>
+	<h1>로그인에 성공하였습니다</h1>
 
 	<%
 	String id = request.getParameter("id");
