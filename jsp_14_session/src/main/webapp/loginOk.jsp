@@ -18,8 +18,8 @@
 	if (id.length() > 4 || passwd.length() > 4) {
 		response.sendRedirect("login.jsp");
 	} else {
-		session.setAttribute("id", "user");
-		session.setMaxInactiveInterval(1800); // 유효시간 설정 default: 30분
+		session.setAttribute("Session1", "user1");
+		session.setMaxInactiveInterval(30); // 유효시간 설정 default: 30분
 		response.sendRedirect("welcome.jsp");
 	}
 	%>

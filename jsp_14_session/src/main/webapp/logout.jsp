@@ -15,7 +15,8 @@
 		out.println("Session Name : " + attributeName + "<br/> Value : " + session.getAttribute(attributeName) + "<br/>");
 	}
 	
-	session.removeAttribute("id");
+	session.removeAttribute("Session1");
+	session.invalidate();
 	
 	%>
 </body>

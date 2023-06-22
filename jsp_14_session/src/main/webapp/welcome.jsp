@@ -10,8 +10,9 @@
 <body>
 	<h1>어서오세용</h1>
 	<%
-	String id = (String)session.getAttribute("id");
+	String id = (String)session.getAttribute("Session1");
 	out.println("현재 세션 => " + session.getId() + "<br/>");
+	out.println("세션 유효 시간 => " + session.getMaxInactiveInterval() + "<br/>");
 	out.println("========================================" + "<br/>");
 
 	Enumeration<String> enumeration = session.getAttributeNames();
