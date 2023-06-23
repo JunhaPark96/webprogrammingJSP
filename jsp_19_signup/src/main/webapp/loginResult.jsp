@@ -32,5 +32,6 @@
 	
 	<h2><a href="modify.jsp">회원정보 수정</a></h2>
 	<h2><a href="logout.jsp">로그아웃</a></h2>
+	<h2><a href="memberSelect.jsp">멤버 확인</a></h2>
 </body>
 </html>
