@@ -75,6 +75,7 @@ public class JoinOk extends HttpServlet {
 				response.sendRedirect("joinResult.jsp");
 			} else {
 				System.out.println("insert failed");
+				conn.rollback();
 				response.sendRedirect("join.html");
 			}
 		} catch (ClassNotFoundException e) {

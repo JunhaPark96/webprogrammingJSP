@@ -38,7 +38,7 @@ public class ModifyResult extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
 
-        String id = (String) request.getSession().getAttribute("loginId"); // get the id from session
+        String id = (String) request.getSession().getAttribute("loginId");
         String pw = request.getParameter("pw");
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
@@ -62,7 +62,7 @@ public class ModifyResult extends HttpServlet {
             pstmt.executeUpdate();
 
             HttpSession session = request.getSession();
-            session.setAttribute("loginName", name); // update the name in session
+            session.setAttribute("loginName", name); 
             System.out.println("update success");
             response.sendRedirect("modifyResult.jsp");
         } catch (ClassNotFoundException e) {
