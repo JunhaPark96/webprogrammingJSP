@@ -8,17 +8,32 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+
 public class MemberDAO {
-	private String url = "jdbc:oracle:thin:@192.168.119.119:1521/dink09.dbsvr";
-	private String id = "scott";
-	private String pw = "tiger";
+	//private String url = "jdbc:oracle:thin:@192.168.119.119:1521/dink09.dbsvr";
+	//private String id = "scott";
+	//private String pw = "tiger";
+	private DataSource ds;
+	
 	
 	public MemberDAO() {
+//		try {
+//			Class.forName("oracle.jdbc.driver.OracleDriver");
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
+			Context ctx = new InitialContext();
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/Oracle19c");
+		} catch (Exception e){
 			e.printStackTrace();
 		}
+		
+		
 	}
 	public ArrayList<MemberDTO> memberSelect() {
 		ArrayList<MemberDTO> dtos = new ArrayList<MemberDTO>();
@@ -28,7 +43,7 @@ public class MemberDAO {
 		ResultSet rs = null;
 		
 		try {
-			conn = DriverManager.getConnection(url, id, pw);
+			conn = ds.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("select * from member");
 			
@@ -67,7 +82,7 @@ public class MemberDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-			conn = DriverManager.getConnection(url, this.id, this.pw);
+//			conn = DriverManager.getConnection(url, this.id, this.pw);
 			pstmt = conn.prepareStatement("INSERT INTO member(id, pw, name, phone, gender) VALUES (?, ?, ?, ?, ?)");
 			pstmt.setString(1, dto.getId());
 			pstmt.setString(2, dto.getPw());
@@ -96,7 +111,7 @@ public class MemberDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-			conn = DriverManager.getConnection(url, this.id, this.pw);
+//			conn = DriverManager.getConnection(url, this.id, this.pw);
 			pstmt = conn.prepareStatement("UPDATE member SET pw = ?, name = ?, phone = ?, gender = ? WHERE id = ?");
 			pstmt.setString(1, dto.getPw());
 			pstmt.setString(2, dto.getName());
