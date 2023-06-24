@@ -121,5 +121,45 @@ public class MemberDAO {
 		
 		return dto;
 	}
+	
+	public boolean memberModify(MemberDTO dto) {
+		// 해당 id에 대한 정보 수정
+		String query = "update member set pw = ?, name = ?, phone = ?, gender = ? where id = ?";
+		boolean result = false;
+		
+		try {
+	        conn.setAutoCommit(false);
+	        pstmt = conn.prepareStatement(query);
+	        pstmt.setString(1, dto.getPw());
+	        pstmt.setString(2, dto.getName());
+	        pstmt.setString(3, dto.getPhone());
+	        pstmt.setString(4, dto.getGender());
+	        pstmt.setString(5, dto.getId());
 
+	        int updateCount = pstmt.executeUpdate();
+	        if (updateCount > 0) {
+	            result = true;
+	            conn.commit();
+	        }
+
+	    } catch (SQLException e) {
+	        try {
+	            conn.rollback(); // 실패 시 롤백
+	        } catch (SQLException e1) {
+	            e1.printStackTrace();
+	        }
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (pstmt != null)
+	                pstmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+		
+		
+		
+		return result;
+	}
 }
