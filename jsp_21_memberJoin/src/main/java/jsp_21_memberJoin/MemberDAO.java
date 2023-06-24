@@ -52,7 +52,7 @@ public class MemberDAO {
 		}
 		return dtos;
 	}
-
+	// 회원가입
 	public boolean memberJoin(MemberDTO dto) {
 		pstmt = null;
 		String query = "insert into member values (?, ?, ?, ?, ?)";
@@ -91,6 +91,7 @@ public class MemberDAO {
 		return result;
 	}
 	
+	// id로 회원 찾기
 	public MemberDTO memberFind(String memId) {
 		pstmt = null;
 		String query = "select * from member where id = '" + memId + "'";
@@ -162,4 +163,30 @@ public class MemberDAO {
 		
 		return result;
 	}
+	
+	// id 중복 체크
+	public boolean isIdExist(String memId) {
+		String query = "select * from member where id = ?";
+		
+		try {
+	        pstmt = conn.prepareStatement(query);
+	        pstmt.setString(1, memId);
+	        rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            return true;
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if(rs != null) rs.close();
+	            if(pstmt != null) pstmt.close();
+	        } catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+		return false;
+	}
+	
 }

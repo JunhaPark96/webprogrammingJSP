@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>회원가입 인증</title>
 </head>
 <body>
 	<%
@@ -20,14 +20,18 @@
 
 	<%
 	MemberDAO memberDAO = new MemberDAO();
-	MemberDTO dto = new MemberDTO(id, pw, name, phone, gender);
-	boolean result = memberDAO.memberJoin(dto);
-
-	if (result) {
-		response.sendRedirect("login.jsp");
+	if (memberDAO.isIdExist(id)) {
+		out.println("이미 존재하는 아이디 입니다");
+		response.sendRedirect("join.jsp");
 	} else {
-		response.sendRedirect("main.jsp");
-		System.out.println("회원 가입 실패");
+		MemberDTO dto = new MemberDTO(id, pw, name, phone, gender);
+		boolean result = memberDAO.memberJoin(dto);
+		if (result) {
+			response.sendRedirect("login.jsp");
+		} else {
+			response.sendRedirect("main.jsp");
+			System.out.println("회원 가입 실패");
+		}
 	}
 	%>
 </body>
