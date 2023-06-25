@@ -189,4 +189,26 @@ public class MemberDAO {
 		return false;
 	}
 	
+	public boolean isPhoneExist(String phone) {
+		String query = "select * from member where phone = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, phone);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+	        try {
+	            if(rs != null) rs.close();
+	            if(pstmt != null) pstmt.close();
+	        } catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+		return false;
+	}
+	
 }
