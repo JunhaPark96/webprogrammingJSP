@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="utf-8"%>
 <%
+	// 로그인한 상태로 로그인 페이지 접속시 메인페이지로 이동
 	if (session.getAttribute("loginUser") != null){
-%>
-	<jsp:forward page="main.jsp"></jsp:forward>	
-<%
+		response.sendRedirect("main.jsp");
 	}
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>로그인창</title>
+<title>로그인 창</title>
+
 </head>
 <body>
 	<h1>환영합니다! 로그인 해주십시오</h1>
@@ -24,9 +24,5 @@
 				'pending' 상태라면 자바스크립트로 '회원 심사 중입니다' alert, 
 				'pause' 상태라면 '계정이 임시 보호 조치 되었습니다' alert
 		--> 
-	<!-- TODO: main 페이지로 멤버리스트를 옮기고,
-			관리자만 볼 수 있게끔 설정.
-			관리자가 로그인했을 때 보이게끔 설정
-	 -->
 </body>
 </html>

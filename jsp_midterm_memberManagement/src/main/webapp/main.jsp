@@ -1,3 +1,4 @@
+<%@page import="jsp_midterm_memberManagement.MemberDAO"%>
 <%@page import="jsp_midterm_memberManagement.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
@@ -11,14 +12,13 @@
 	<%
 	// 로그인된 사용자 정보 가져오기
 	MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
-	// 로그인 한 경우
 	if (loginUser != null) {
 		// 관리자인 경우
-		if (loginUser.getId().equals("admin")){
+		if (loginUser.getMemberRole().equals("admin")){
 			%>
 		<h1><%=loginUser.getName()%> 님, 어서오세요. 환영합니다. </h1>
 			<h3> <a href="memberManagement.jsp">회원 관리</a> </h3>
-			
+			<h3> <a href="logout.jsp">로그아웃</a></h3>
 		
 		<%
 		// 사용자인 경우

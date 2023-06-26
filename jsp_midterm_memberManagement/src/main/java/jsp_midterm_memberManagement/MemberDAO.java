@@ -218,7 +218,7 @@ public class MemberDAO {
 	}
 	// 관리자 - 멤버 승인
 	public boolean approveMember(String memId) {
-	    String query = "update members set memberStatus = 'approved' where id = ?";
+	    String query = "update members set memberStatus = 'normal' where id = ?";
 	    boolean result = false;
 
 	    try {
@@ -251,5 +251,91 @@ public class MemberDAO {
 
 	    return result;
 	}
+	
+	// 회원 가입과 정보 수정 시 조건
+	public String validateForm(String pw, String phone, String email) {
+        // 비밀번호 체크
+        if (pw.length() < 4 || !pw.matches("^[A-Za-z0-9]+$")) {
+            return "비밀번호는 4자 이상의 영문자와 숫자로만 구성되어야 합니다.";
+        }
+        // 전화번호 형식 체크
+        if (!phone.matches("^010-\\d{4}-\\d{4}$")) {
+            return "전화번호는 '010-xxxx-xxxx' 형식이어야 합니다.";
+        }
+        // 이메일 형식 체크
+        if (!email.contains("@")) {
+            return "이메일은 '@'를 포함해야 합니다.";
+        }
+        return null;
+    }
+	
+	public boolean memberQuit(String memId) {
+		String query = "delete from members where id = ?";
+	    boolean result = false;
 
+	    try {
+	        conn.setAutoCommit(false);
+	        pstmt = conn.prepareStatement(query);
+	        pstmt.setString(1, memId);
+	        pstmt.executeUpdate();
+
+	        conn.commit();
+	        result = true;
+	    } catch (SQLException e) {
+	        try {
+	            conn.rollback();
+	        } catch (SQLException e1) {
+	            e1.printStackTrace();
+	        }
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null)
+	                rs.close();
+	            if (pstmt != null)
+	                pstmt.close();
+	            if (conn != null)
+	                conn.close();
+	        } catch (Exception e2) {
+	            e2.printStackTrace();
+	        }
+	    }
+
+	    return result;
+	}
+	
+	public boolean memberDelete(String memId) {
+		String query = "update members set memberStatus = 'pause' where id = ?";
+	    boolean result = false;
+
+	    try {
+	        conn.setAutoCommit(false);
+	        pstmt = conn.prepareStatement(query);
+	        pstmt.setString(1, memId);
+	        pstmt.executeUpdate();
+
+	        conn.commit();
+	        result = true;
+	    } catch (SQLException e) {
+	        try {
+	            conn.rollback();
+	        } catch (SQLException e1) {
+	            e1.printStackTrace();
+	        }
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null)
+	                rs.close();
+	            if (pstmt != null)
+	                pstmt.close();
+	            if (conn != null)
+	                conn.close();
+	        } catch (Exception e2) {
+	            e2.printStackTrace();
+	        }
+	    }
+
+	    return result;
+	}
 }

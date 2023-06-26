@@ -16,7 +16,6 @@
 	String phone = request.getParameter("phone");
 	String email = request.getParameter("email");
 
-
 	MemberDAO memberDAO = new MemberDAO();
 	// id 중복 체크
 	if(memberDAO.isIdExist(id)) {
@@ -35,7 +34,6 @@
 		} else {
 			response.sendRedirect("join.jsp");
 			System.out.println("회원 가입 실패");
-			// TODO: '회원 가입 실패' alert 창을 띄우며 회원가입 창 다시 리다이렉트
 		}
 	}
 	%>

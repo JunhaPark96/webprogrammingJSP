@@ -22,6 +22,7 @@
 
 	// DAO 객체 생성
 	MemberDAO memberDAO = new MemberDAO();
+	
 	// DTO 객체 생성
 	MemberDTO dto = new MemberDTO(name, id, pw, phone, email);
 	// session을 통해 로그인 정보가 제대로 넘어왔는지 출력 확인
