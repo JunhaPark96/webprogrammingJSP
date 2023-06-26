@@ -62,7 +62,6 @@ public class JDBC {
                 System.out.println("JDBC 연결 해제 실패");
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

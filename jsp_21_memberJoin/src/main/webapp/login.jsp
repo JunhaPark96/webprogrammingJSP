@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%
+	if (session.getAttribute("loginUser") != null){
+%>
+	<jsp:forward page="main.jsp"></jsp:forward>	
+<%
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
