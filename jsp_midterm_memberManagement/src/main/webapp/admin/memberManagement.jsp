@@ -28,7 +28,8 @@ tr.member-row:hover {
 }
 </style>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
 	
 <script>
 	$(document).ready(function() {
@@ -65,7 +66,7 @@ tr.member-row:hover {
 		// 회원 row를 클릭 시, 회원 정보 수정 페이지로 이동
 		$(".member-row").click(function() {
 			var userId = $(this).data("id");
-			window.location.href = "modify.jsp?id=" + userId;
+			window.location.href = "modifyAdmin.jsp?id=" + userId;
 		});
 	});
 	

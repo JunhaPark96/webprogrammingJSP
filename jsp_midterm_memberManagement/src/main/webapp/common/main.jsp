@@ -14,7 +14,7 @@
 	MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
 	if (loginUser != null) {
 		// 관리자인 경우
-		if (loginUser.getMemberRole().equals("admin")){
+		if (loginUser.getMemberRole() != null && loginUser.getMemberRole().equals("admin")){
 			%>
 		<h1><%=loginUser.getName()%> 님, 어서오세요. 환영합니다. </h1>
 			<h3> <a href="../admin/memberManagement.jsp">회원 관리</a> </h3>
@@ -27,10 +27,6 @@
 			<h3> <a href="../user/modify.jsp">회원정보 수정</a> </h3>
 			<h3> <a href="../common/logout.jsp">로그아웃</a></h3>
 			<h3> <a href="../user/delete.jsp">회원탈퇴</a></h3>
-			<!-- 
-			TODO: 회원 탈퇴 요청 보내기
-			 -->
-		
 		<%	
 		}
 	%>
