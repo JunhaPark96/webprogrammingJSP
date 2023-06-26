@@ -57,7 +57,7 @@ public class MemberDAO {
 	
 	public boolean memberJoin(MemberDTO dto) {
 		pstmt = null;
-		String query = "insert into members VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String query = "insert into members (name, id, pw, phone, email) values (?, ?, ?, ?, ?)";
 		boolean result = false;
 
 		try {
@@ -68,8 +68,6 @@ public class MemberDAO {
 			pstmt.setString(3, dto.getPw());
 			pstmt.setString(4, dto.getPhone());
 			pstmt.setString(5, dto.getEmail());
-			pstmt.setString(6, dto.getMemberStatus());
-			pstmt.setString(7, dto.getMemberRole());
 
 			int memberJoin = pstmt.executeUpdate();
 			if (memberJoin > 0) {
@@ -131,7 +129,7 @@ public class MemberDAO {
 	}
 	
 	public boolean memberModify(MemberDTO dto) {
-		String query = "update members SET pw = ?, name = ?, phone = ?, email = ?, memberStatus = ?, memberRole = ? WHERE id = ?";
+		String query = "update members set pw = ?, name = ?, phone = ?, email = ? where id = ?";
 		boolean result = false;
 		
 		try {
@@ -141,11 +139,10 @@ public class MemberDAO {
 			pstmt.setString(2, dto.getName());
 			pstmt.setString(3, dto.getPhone());
 			pstmt.setString(4, dto.getEmail());
-			pstmt.setString(5, dto.getMemberStatus());
-			pstmt.setString(6, dto.getMemberRole());
-			pstmt.setString(7, dto.getId());
-			
+			pstmt.setString(5, dto.getId());
+			rs = pstmt.executeQuery();
 			int updateCount = pstmt.executeUpdate();
+//			System.out.println(updateCount);
 			if (updateCount > 0) {
 				result = true;
 				conn.commit();
@@ -221,7 +218,7 @@ public class MemberDAO {
 	}
 	// 관리자 - 멤버 승인
 	public boolean approveMember(String memId) {
-	    String query = "update members SET memberStatus = 'approved' WHERE id = ?";
+	    String query = "update members set memberStatus = 'approved' where id = ?";
 	    boolean result = false;
 
 	    try {

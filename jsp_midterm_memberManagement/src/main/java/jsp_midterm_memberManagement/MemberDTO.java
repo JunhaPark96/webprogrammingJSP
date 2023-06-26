@@ -19,6 +19,14 @@ public class MemberDTO {
 		this.memberRole = memberRole;
 	}
 	
+	public MemberDTO(String name, String id, String pw, String phone, String email) {
+		this.name = name;
+		this.id = id;
+		this.pw = pw;
+		this.phone = phone;
+		this.email = email;
+	}
+
 	public String getName() {
 		return name;
 	}
