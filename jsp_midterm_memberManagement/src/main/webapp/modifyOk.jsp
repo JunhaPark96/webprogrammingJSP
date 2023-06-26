@@ -1,44 +1,56 @@
 <%@page import="jsp_midterm_memberManagement.MemberDAO"%>
 <%@page import="jsp_midterm_memberManagement.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="utf-8"%>
+    pageEncoding="EUC-KR"%>
+<%
+request.setCharacterEncoding("EUC-KR");
+response.setCharacterEncoding("EUC-KR");
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>íšŒì› ìˆ˜ì • ê²€ì¦</title>
+<meta charset="EUC-KR">
+<title>È¸¿ø ¼öÁ¤ °ËÁõ</title>
 </head>
 <body>
 	<%
-	
-	// ë°ì´í„° ë°›ê¸°
+	// µ¥ÀÌÅÍ ¹Ş±â
 	MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
 	String id = loginUser.getId();
-	// íšŒì›ì •ë³´ê°€ ë¹„ì–´ ìˆê±°ë‚˜ nullì¸ ê²½ìš° ê¸°ì¡´ ì‚¬ìš©ì ì •ë³´ ì‚¬ìš©
+
+    // È¸¿øÁ¤º¸°¡ ºñ¾î ÀÖ°Å³ª nullÀÎ °æ¿ì ±âÁ¸ »ç¿ëÀÚ Á¤º¸ »ç¿ë
     String pw = (request.getParameter("pw") == null || request.getParameter("pw").equals("")) ? loginUser.getPw() : request.getParameter("pw");
     String name = (request.getParameter("name") == null || request.getParameter("name").equals("")) ? loginUser.getName() : request.getParameter("name");
     String phone = (request.getParameter("phone") == null || request.getParameter("phone").equals("")) ? loginUser.getPhone() : request.getParameter("phone");
     String email = (request.getParameter("email") == null || request.getParameter("email").equals("")) ? loginUser.getEmail() : request.getParameter("email");
+	String memberStatus = (request.getParameter("memberStatus") == null || request.getParameter("memberStatus").equals("")) ? loginUser.getMemberStatus() : request.getParameter("memberStatus");
+	String memberRole = (request.getParameter("memberRole") == null || request.getParameter("memberRole").equals("")) ? loginUser.getMemberRole() : request.getParameter("memberRole");
 
-	// DAO ê°ì²´ ìƒì„±
+	// DAO °´Ã¼ »ı¼º
 	MemberDAO memberDAO = new MemberDAO();
 	
-	// DTO ê°ì²´ ìƒì„±
-	MemberDTO dto = new MemberDTO(name, id, pw, phone, email);
-	// sessionì„ í†µí•´ ë¡œê·¸ì¸ ì •ë³´ê°€ ì œëŒ€ë¡œ ë„˜ì–´ì™”ëŠ”ì§€ ì¶œë ¥ í™•ì¸
-	//System.out.println(id + " " + pw + " " + name + " " + phone + " " + email);
-	// íšŒì› ì •ë³´ ìˆ˜ì • ë©”ì†Œë“œ í˜¸ì¶œ
-	boolean result = memberDAO.memberModify(dto);
-	//System.out.println(result);
-	//System.out.println(loginUser);
-	if (result) {
-		// ìˆ˜ì •ëœ ìœ ì €ì— ë§ê²Œ dto ìˆ˜ì •
-		session.setAttribute("loginUser", dto);
-		// ìˆ˜ì • ì„±ê³µ ë©”ì‹œì§€ ì¶œë ¥
-		out.println("<script>alert('íšŒì›ì •ë³´ê°€ ì„±ê³µì ìœ¼ë¡œ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.'); location.href='main.jsp';</script>");
+	// DTO °´Ã¼ »ı¼º
+	MemberDTO dto = new MemberDTO(name, id, pw, phone, email, memberStatus, memberRole);
+	
+	// ¼º°ø ¿©ºÎ¸¦ È®ÀÎÇÒ º¯¼ö ¼±¾ğ
+	boolean result = false;
+
+	if(loginUser.getMemberRole().equals("admin")) {
+		// °ü¸®ÀÚÀÎ °æ¿ì È¸¿ø »óÅÂ¿Í ±ÇÇÑµµ ¼öÁ¤ °¡´É
+		result = memberDAO.adminModify(dto);
 	} else {
-		// ìˆ˜ì • ì‹¤íŒ¨ ë©”ì‹œì§€ ì¶œë ¥
-		out.println("<script>alert('íšŒì›ì •ë³´ ìˆ˜ì •ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.'); history.back();</script>");
+		// »ç¿ëÀÚÀÎ °æ¿ì ÀÏ¹İ Á¤º¸¸¸ ¼öÁ¤ °¡´É
+		result = memberDAO.memberModify(dto);
+		// ¼öÁ¤µÈ À¯Àú¿¡ ¸Â°Ô dto ¼öÁ¤
+		session.setAttribute("loginUser", dto);
+	}
+
+	if (result) {
+		// ¼öÁ¤ ¼º°ø ¸Ş½ÃÁö Ãâ·Â
+		out.println("<script>alert('È¸¿øÁ¤º¸°¡ ¼º°øÀûÀ¸·Î ¼öÁ¤µÇ¾ú½À´Ï´Ù.'); location.href='main.jsp';</script>");
+	} else {
+		// ¼öÁ¤ ½ÇÆĞ ¸Ş½ÃÁö Ãâ·Â
+		out.println("<script>alert('È¸¿øÁ¤º¸ ¼öÁ¤¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.'); history.back();</script>");
 	}
 	%>
 </body>

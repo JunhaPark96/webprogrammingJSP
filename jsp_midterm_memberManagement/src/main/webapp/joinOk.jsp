@@ -1,15 +1,20 @@
 <%@page import="jsp_midterm_memberManagement.MemberDTO"%>
 <%@page import="jsp_midterm_memberManagement.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="utf-8"%>
+    pageEncoding="EUC-KR"%>
+<%
+request.setCharacterEncoding("EUC-KR");
+response.setCharacterEncoding("EUC-KR");
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Insert title here</title>
+<meta charset="EUC-KR">
+<title>È¸¿ø°¡ÀÔ ÀÎÁõ</title>
 </head>
 <body>
 	<%
+	
 	String name = request.getParameter("name");
 	String id = request.getParameter("id");
 	String pw = request.getParameter("pw");
@@ -17,15 +22,15 @@
 	String email = request.getParameter("email");
 
 	MemberDAO memberDAO = new MemberDAO();
-	// id ì¤‘ë³µ ì²´í¬
+	// id Áßº¹ Ã¼Å©
 	if(memberDAO.isIdExist(id)) {
-		out.println("ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.");
-		// ì „í™”ë²ˆí˜¸ ì¤‘ë³µ ì²´í¬
+		out.println("ÀÌ¹Ì Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
+		// ÀüÈ­¹øÈ£ Áßº¹ Ã¼Å©
 	} else if(memberDAO.isPhoneExist(phone)) {
-		out.println("ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ì „í™”ë²ˆí˜¸ì…ë‹ˆë‹¤.");
+		out.println("ÀÌ¹Ì Á¸ÀçÇÏ´Â ÀüÈ­¹øÈ£ÀÔ´Ï´Ù.");
 		
 	} else {
-		// ì¤‘ë³µì´ ì—†ëŠ” ê²½ìš°
+		// Áßº¹ÀÌ ¾ø´Â °æ¿ì
 		MemberDTO dto = new MemberDTO(name, id, pw, phone, email);
 		boolean result = memberDAO.memberJoin(dto);
 
@@ -33,7 +38,7 @@
 			response.sendRedirect("login.jsp");
 		} else {
 			response.sendRedirect("join.jsp");
-			System.out.println("íšŒì› ê°€ì… ì‹¤íŒ¨");
+			System.out.println("È¸¿ø °¡ÀÔ ½ÇÆĞ");
 		}
 	}
 	%>

@@ -1,13 +1,13 @@
 <%@page import="jsp_midterm_memberManagement.MemberDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="jsp_midterm_memberManagement.MemberDAO"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+	pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>íšŒì› ê´€ë¦¬</title>
+<meta charset="EUC-KR">
+<title>È¸¿ø °ü¸®</title>
 <style>
 table {
 	width: 100%;
@@ -23,47 +23,50 @@ th, td {
 th {
 	background-color: #f2f2f2;
 }
+tr.member-row:hover {
+    background-color: #f9f9f9;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
 <script>
 	$(document).ready(function() {
-		// ìŠ¹ì¸ ì²˜ë¦¬ ë¡œì§. ë²„íŠ¼ì„ í´ë¦­í•˜ë©´ ê°€ìž… ìŠ¹ì¸ ì²˜ë¦¬
+		// ½ÂÀÎ Ã³¸® ·ÎÁ÷. ¹öÆ°À» Å¬¸¯ÇÏ¸é °¡ÀÔ ½ÂÀÎ Ã³¸®
 		$(".approve-button").click(function() {
 			var userId = $(this).data("id");
 			$.post("approveOk.jsp", {
 				id : userId
 			}, function(data) {
-				data = data.trim(); // ê³µë°±ì„ ì œê±°í•˜ì—¬ ë¬¸ìžì—´ ì—ëŸ¬ ì°¨ë‹¨
+				data = data.trim(); // °ø¹éÀ» Á¦°ÅÇÏ¿© ¹®ÀÚ¿­ ¿¡·¯ Â÷´Ü
 				if (data == "success") {
-					alert("ìŠ¹ì¸ ì²˜ë¦¬í•˜ì˜€ìŠµë‹ˆë‹¤");
+					alert("½ÂÀÎ Ã³¸®ÇÏ¿´½À´Ï´Ù");
 					location.reload();
 				} else {
-					alert("ìŠ¹ì¸ ì²˜ë¦¬ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•´ì£¼ì„¸ìš”.");
+					alert("½ÂÀÎ Ã³¸®¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØÁÖ¼¼¿ä.");
 				}
 			});
 		});
+		// Å»Åð Ã³¸® ·ÎÁ÷. ¹öÆ°À» Äð¸¯ÇÏ¸é DB¿¡¼­ È¸¿ø »èÁ¦
 		$(".delete-button").click(function() {
             var userId = $(this).data("id");
             $.post("deleteOk.jsp", {
                 id : userId
             }, function(data) {
-                data = data.trim(); // ê³µë°±ì„ ì œê±°í•˜ì—¬ ë¬¸ìžì—´ ì—ëŸ¬ ì°¨ë‹¨
+                data = data.trim(); // °ø¹éÀ» Á¦°ÅÇÏ¿© ¹®ÀÚ¿­ ¿¡·¯ Â÷´Ü
                 if (data == "success") {
-                    alert("ì‚­ì œ ì²˜ë¦¬í•˜ì˜€ìŠµë‹ˆë‹¤");
+                    alert("»èÁ¦ Ã³¸®ÇÏ¿´½À´Ï´Ù");
                     location.reload();
                 } else {
-                    alert("ì‚­ì œ ì²˜ë¦¬ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•´ì£¼ì„¸ìš”.");
+                    alert("»èÁ¦ Ã³¸®¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØÁÖ¼¼¿ä.");
                 }
             });
         });
-		// row í´ë¦­ ì‹œ í•´ë‹¹ userì˜ ì •ë³´ë¥¼ ìˆ˜ì •í•  ìˆ˜ ìžˆë„ë¡ íŽ˜ì´ì§€ ì „í™˜
-		/*
-		$("tr.member-row").click(function() {
-	        var userId = $(this).data("id");
-	        window.location.href = "modify.jsp?id=" + userId;
-	    });*/
+		// È¸¿ø row¸¦ Å¬¸¯ ½Ã, È¸¿ø Á¤º¸ ¼öÁ¤ ÆäÀÌÁö·Î ÀÌµ¿
+		$(".member-row").click(function() {
+			var userId = $(this).data("id");
+			window.location.href = "modify.jsp?id=" + userId;
+		});
 	});
 	
 
@@ -77,13 +80,13 @@ th {
 	%>
 	<table>
 		<tr>
-			<th>ì´ë¦„</th>
-			<th>ì•„ì´ë””</th>
-			<th>ë¹„ë°€ë²ˆí˜¸</th>
-			<th>ì „í™”ë²ˆí˜¸</th>
-			<th>ì´ë©”ì¼</th>
-			<th>íšŒì›ìƒíƒœ</th>
-			<th>íšŒì›ê¶Œí•œ</th>
+			<th>ÀÌ¸§</th>
+			<th>¾ÆÀÌµð</th>
+			<th>ºñ¹Ð¹øÈ£</th>
+			<th>ÀüÈ­¹øÈ£</th>
+			<th>ÀÌ¸ÞÀÏ</th>
+			<th>È¸¿ø»óÅÂ</th>
+			<th>È¸¿ø±ÇÇÑ</th>
 			<th></th>
 		</tr>
 		<%
@@ -94,7 +97,7 @@ th {
 			<td><%=dto.getName()%></td>
 			<td><%=dto.getId()%></td>
 			<td><%=dto.getPw()%></td>
-			<!--  ê´€ë¦¬ìž ë³¸ì¸ì˜ ì „í™”ë²ˆí˜¸ë§Œ ë³´ì´ê³ , ë‚˜ë¨¸ì§€ëŠ” ê°€ë¦¼ -->
+			<!--  °ü¸®ÀÚ º»ÀÎÀÇ ÀüÈ­¹øÈ£¸¸ º¸ÀÌ°í, ³ª¸ÓÁö´Â °¡¸² -->
 			<td><%=(loginUser.getId().equals(dto.getId()) ? dto.getPhone() : "010-XXXX-XXXX")%></td>
 			<td><%=dto.getEmail()%></td>
 			<td><%=dto.getMemberStatus()%></td>
@@ -103,14 +106,14 @@ th {
 				<%
 				if (dto.getMemberStatus().equals("pending")) {
 				%>
-				<button class="approve-button" data-id="<%=dto.getId()%>">ìŠ¹ì¸</button>
+				<button class="approve-button" data-id="<%=dto.getId()%>">½ÂÀÎ</button>
 				<%
 				}
 				%>
 				<%
        			 if (dto.getMemberStatus().equals("pause")) {
         		%>
-        		<button class="delete-button" data-id="<%=dto.getId()%>">ì‚­ì œ</button>
+        		<button class="delete-button" data-id="<%=dto.getId()%>">»èÁ¦</button>
         		<%
         		}
         		%>

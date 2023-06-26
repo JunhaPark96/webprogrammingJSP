@@ -1,8 +1,8 @@
 <%@page import="jsp_midterm_memberManagement.MemberDAO"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+	pageEncoding="EUC-KR"%>
 <%
-// memberManagementì—ì„œ ë°›ì€ idì— ëŒ€í•´ íƒˆí‡´ ì²˜ë¦¬
+// memberManagement¿¡¼­ ¹ÞÀº id¿¡ ´ëÇØ Å»Åð Ã³¸®
 String userId = request.getParameter("id");
 MemberDAO memberDAO = new MemberDAO();
 boolean result = memberDAO.memberDelete(userId);

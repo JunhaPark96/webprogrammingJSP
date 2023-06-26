@@ -1,30 +1,30 @@
 <%@page import="jsp_midterm_memberManagement.MemberDAO"%>
 <%@page import="jsp_midterm_memberManagement.MemberDTO"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>íšŒì› íƒˆí‡´</title>
+<meta charset="EUC-KR">
+<title>È¸¿ø Å»Åð</title>
 </head>
 <body>
 	<%
-	// session ì •ë³´
+	// session Á¤º¸
 	MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
-	// ìœ ì € id ì •ë³´
+	// À¯Àú id Á¤º¸
 	String id = loginUser.getId();
 	MemberDAO memberDAO = new MemberDAO();
-	System.out.println("user ìƒíƒœëŠ” " + loginUser.getMemberStatus());
-	// normal ìƒíƒœì¼ ë•Œë§Œ íšŒì› íƒˆí‡´ ì‹ ì²­ ê°€ëŠ¥
+	System.out.println("user »óÅÂ´Â " + loginUser.getMemberStatus());
+	// normal »óÅÂÀÏ ¶§¸¸ È¸¿ø Å»Åð ½ÅÃ» °¡´É
 	if (loginUser.getMemberStatus().equals("normal")){
 		memberDAO.memberQuit(id);
-		// ì„¸ì…˜ ì¢…ë£Œ í›„ main íŽ˜ì´ì§€ ì´ë™
+		// ¼¼¼Ç Á¾·á ÈÄ main ÆäÀÌÁö ÀÌµ¿
 		session.invalidate();
 		response.sendRedirect("main.jsp");
 	} else {
-        // íƒˆí‡´ ì²˜ë¦¬ ì‹¤íŒ¨ ë©”ì‹œì§€ ì¶œë ¥
-        out.println("íšŒì› íƒˆí‡´ ì²˜ë¦¬ ì‹¤íŒ¨!");
+        // Å»Åð Ã³¸® ½ÇÆÐ ¸Þ½ÃÁö Ãâ·Â
+        out.println("È¸¿ø Å»Åð Ã³¸® ½ÇÆÐ!");
     }
 	%>
 </body>

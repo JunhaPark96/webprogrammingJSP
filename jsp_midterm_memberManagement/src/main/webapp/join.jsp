@@ -1,28 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="utf-8"%>
+    pageEncoding="EUC-KR"%>
+<%
+request.setCharacterEncoding("EUC-KR");
+response.setCharacterEncoding("EUC-KR");
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>회원 가입</title>
+<meta charset="EUC-KR">
+<title>ȸ�� ����</title>
 <script>
 	function validateForm() {
 		var pw = document.getElementById("pw").value;
-		// 비밀번호 체크
+		// ��й�ȣ üũ
 		if (pw.length < 4 || !pw.match(/^[A-Za-z0-9]+$/)) {
-			alert("비밀번호는 4자 이상의 영문자와 숫자로만 구성되어야 합니다.");
+			alert("��й�ȣ�� 4�� �̻��� �����ڿ� ���ڷθ� �����Ǿ�� �մϴ�.");
 			return false;
 		}
-		// 전화번호 형식 체크
+		// ��ȭ��ȣ ���� üũ
 		var phone = document.getElementById("phone").value;
 		if (!phone.match(/^010-\d{4}-\d{4}$/)) {
-			alert("전화번호는 '010-xxxx-xxxx' 형식이어야 합니다.");
+			alert("��ȭ��ȣ�� '010-xxxx-xxxx' �����̾�� �մϴ�.");
 			return false;
 		}
-		// 이메일 형식 체크
+		// �̸��� ���� üũ
 		var email = document.getElementById("email").value;
 		if (!email.includes("@")) {
-			alert("이메일은 '@'를 포함해야 합니다.");
+			alert("�̸����� '@'�� �����ؾ� �մϴ�.");
 			return false;
 		}
 		return true;
@@ -31,15 +35,15 @@
 </head>
 <body>
 	<form action="joinOk.jsp" method="post" onsubmit="return validateForm()">
-		이름: 	<input type="text" name="name"> <br>
-		아이디: 	<input type="text" name="id"> <br>
-		비밀번호: 	<input type="password" id="pw" name="pw"> 
-        <div>비밀번호는 4자 이상의 영문자와 숫자를 포함해야 합니다.</div>
-		전화번호: 	<input type="text" id="phone" name="phone"> 
-		<div>전화번호는 '010-xxxx-xxxx' 형식이어야 합니다.</div>
-		이메일: 	<input type="text" id="email" name="email"> 
-		<div>이메일은 '@'를 포함해야 합니다.</div> <br>
-		<input type="submit" value="회원가입">
+		�̸�: 	<input type="text" name="name"> <br>
+		���̵�: 	<input type="text" name="id"> <br>
+		��й�ȣ: 	<input type="password" id="pw" name="pw"> 
+        <div>��й�ȣ�� 4�� �̻��� �����ڿ� ���ڸ� �����ؾ� �մϴ�.</div>
+		��ȭ��ȣ: 	<input type="text" id="phone" name="phone"> 
+		<div>��ȭ��ȣ�� '010-xxxx-xxxx' �����̾�� �մϴ�.</div>
+		�̸���: 	<input type="text" id="email" name="email"> 
+		<div>�̸����� '@'�� �����ؾ� �մϴ�.</div> <br>
+		<input type="submit" value="ȸ������">
 	</form>
 </body>
 </html>

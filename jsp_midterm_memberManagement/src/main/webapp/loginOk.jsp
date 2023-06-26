@@ -1,12 +1,12 @@
 <%@page import="jsp_midterm_memberManagement.MemberDTO"%>
 <%@page import="jsp_midterm_memberManagement.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="utf-8"%>
+	pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>ë¡œê·¸ì¸ ì¸ì¦</title>
+<meta charset="EUC-KR">
+<title>·Î±×ÀÎ ÀÎÁõ</title>
 </head>
 <body>
 
@@ -16,24 +16,24 @@
 
 	MemberDAO memberDAO = new MemberDAO();
 	MemberDTO dto = memberDAO.memberFind(id);
-	// ê²€ì¦
+	// °ËÁõ
 	
 	if (dto.getMemberStatus().equals("pending")) {
-		// íšŒì› ìŠ¹ì¸ ëŒ€ê¸° ì¤‘
-		out.println("<script>alert('íšŒì› ìŠ¹ì¸ ëŒ€ê¸°ì¤‘ì…ë‹ˆë‹¤.'); location.href='main.jsp';</script>");
+		// È¸¿ø ½ÂÀÎ ´ë±â Áß
+		out.println("<script>alert('È¸¿ø ½ÂÀÎ ´ë±âÁßÀÔ´Ï´Ù.'); location.href='main.jsp';</script>");
 	} else if (dto.getMemberStatus().equals("pause")) {
-		// íšŒì› ì¼ì‹œ ì •ì§€ ìƒíƒœ
-		out.println("<script>alert('ì„ì‹œ ë³´í˜¸ì¤‘ì¸ ê³„ì •ì…ë‹ˆë‹¤.'); location.href='main.jsp';</script>");
+		// È¸¿ø ÀÏ½Ã Á¤Áö »óÅÂ
+		out.println("<script>alert('ÀÓ½Ã º¸È£ÁßÀÎ °èÁ¤ÀÔ´Ï´Ù.'); location.href='main.jsp';</script>");
 	} else {
-		// íšŒì› ìƒíƒœ normal
+		// È¸¿ø »óÅÂ normal
 		if (dto != null && dto.getPw().equals(pw)) {
-			// ë¡œê·¸ì¸ ì„±ê³µ
-			System.out.println("ë¡œê·¸ì¸ ì„±ê³µ");
+			// ·Î±×ÀÎ ¼º°ø
+			System.out.println("·Î±×ÀÎ ¼º°ø");
 			session.setAttribute("loginUser", dto);
 			response.sendRedirect("main.jsp");
 		} else {
-			// ë¡œê·¸ì¸ ì‹¤íŒ¨
-			System.out.println("ë¡œê·¸ì¸ ì‹¤íŒ¨");
+			// ·Î±×ÀÎ ½ÇÆĞ
+			System.out.println("·Î±×ÀÎ ½ÇÆĞ");
 			response.sendRedirect("login.jsp");
 
 		}

@@ -1,46 +1,46 @@
 <%@page import="jsp_midterm_memberManagement.MemberDAO"%>
 <%@page import="jsp_midterm_memberManagement.MemberDTO"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>ë©”ì¸ í™”ë©´</title>
+<meta charset="EUC-KR">
+<title>¸ÞÀÎ È­¸é</title>
 </head>
 <body>
 	<%
-	// ë¡œê·¸ì¸ëœ ì‚¬ìš©ìž ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+	// ·Î±×ÀÎµÈ »ç¿ëÀÚ Á¤º¸ °¡Á®¿À±â
 	MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
 	if (loginUser != null) {
-		// ê´€ë¦¬ìžì¸ ê²½ìš°
+		// °ü¸®ÀÚÀÎ °æ¿ì
 		if (loginUser.getMemberRole().equals("admin")){
 			%>
-		<h1><%=loginUser.getName()%> ë‹˜, ì–´ì„œì˜¤ì„¸ìš”. í™˜ì˜í•©ë‹ˆë‹¤. </h1>
-			<h3> <a href="memberManagement.jsp">íšŒì› ê´€ë¦¬</a> </h3>
-			<h3> <a href="logout.jsp">ë¡œê·¸ì•„ì›ƒ</a></h3>
+		<h1><%=loginUser.getName()%> ´Ô, ¾î¼­¿À¼¼¿ä. È¯¿µÇÕ´Ï´Ù. </h1>
+			<h3> <a href="memberManagement.jsp">È¸¿ø °ü¸®</a> </h3>
+			<h3> <a href="logout.jsp">·Î±×¾Æ¿ô</a></h3>
 		
 		<%
-		// ì‚¬ìš©ìžì¸ ê²½ìš°
+		// »ç¿ëÀÚÀÎ °æ¿ì
 		} else{ %>
-			<h1><%=loginUser.getName()%> ë‹˜, ì–´ì„œì˜¤ì„¸ìš”. í™˜ì˜í•©ë‹ˆë‹¤. </h1>
-			<h3> <a href="modify.jsp">íšŒì›ì •ë³´ ìˆ˜ì •</a> </h3>
-			<h3> <a href="logout.jsp">ë¡œê·¸ì•„ì›ƒ</a></h3>
-			<h3> <a href="delete.jsp">íšŒì›íƒˆí‡´</a></h3>
+			<h1><%=loginUser.getName()%> ´Ô, ¾î¼­¿À¼¼¿ä. È¯¿µÇÕ´Ï´Ù. </h1>
+			<h3> <a href="modify.jsp">È¸¿øÁ¤º¸ ¼öÁ¤</a> </h3>
+			<h3> <a href="logout.jsp">·Î±×¾Æ¿ô</a></h3>
+			<h3> <a href="delete.jsp">È¸¿øÅ»Åð</a></h3>
 			<!-- 
-			TODO: íšŒì› íƒˆí‡´ ìš”ì²­ ë³´ë‚´ê¸°
+			TODO: È¸¿ø Å»Åð ¿äÃ» º¸³»±â
 			 -->
 		
 		<%	
 		}
 	%>
 	<%
-	// ë¡œê·¸ì¸ í•˜ì§€ ì•Šì€ ê²½ìš°
+	// ·Î±×ÀÎ ÇÏÁö ¾ÊÀº °æ¿ì
 	} else {
 	%>
-	<h1>í™˜ì˜í•©ë‹ˆë‹¤. ë¡œê·¸ì¸í•´ì£¼ì„¸ìš”</h1>
-	<h3><a href="login.jsp">ë¡œê·¸ì¸</a></h3>
-	<h3><a href="join.jsp">íšŒì›ê°€ìž…</a></h3>
+	<h1>È¯¿µÇÕ´Ï´Ù. ·Î±×ÀÎÇØÁÖ¼¼¿ä</h1>
+	<h3><a href="login.jsp">·Î±×ÀÎ</a></h3>
+	<h3><a href="join.jsp">È¸¿ø°¡ÀÔ</a></h3>
 	<%
 	}
 	%>

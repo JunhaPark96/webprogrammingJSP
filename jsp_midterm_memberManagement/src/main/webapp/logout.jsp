@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="utf-8"%>
+    pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>로그아웃</title>
+<meta charset="EUC-KR">
+<title>�α׾ƿ�</title>
 </head>
 <body>
 	<%
 		session.invalidate();
 		response.sendRedirect("main.jsp");
-		System.out.println("로그아웃 성공");
+		System.out.println("�α׾ƿ� ����");
 	%>
 </body>
 </html>

@@ -166,6 +166,46 @@ public class MemberDAO {
 		return result;
 	}
 	
+	public boolean adminModify(MemberDTO dto) {
+		String query = "update members set pw = ?, name = ?, email = ?, memberStatus = ?, memberRole = ? where id = ?";
+		boolean result = false;
+		
+		try {
+			conn.setAutoCommit(false);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, dto.getPw());
+			pstmt.setString(2, dto.getName());
+			pstmt.setString(3, dto.getEmail());
+			pstmt.setString(4, dto.getMemberStatus());
+			pstmt.setString(5, dto.getMemberRole());
+			pstmt.setString(6, dto.getId());
+			
+			rs = pstmt.executeQuery();
+			int updateCount = pstmt.executeUpdate();
+//			System.out.println(updateCount);
+			if (updateCount > 0) {
+				result = true;
+				conn.commit();
+			}
+
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	public boolean isIdExist(String memId) {
 		String query = "select * from members where id = ?";
 		
