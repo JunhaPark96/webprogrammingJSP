@@ -270,7 +270,7 @@ public class MemberDAO {
     }
 	
 	public boolean memberQuit(String memId) {
-		String query = "delete from members where id = ?";
+		String query = "update members set memberStatus = 'pause' where id = ?";
 	    boolean result = false;
 
 	    try {
@@ -278,7 +278,7 @@ public class MemberDAO {
 	        pstmt = conn.prepareStatement(query);
 	        pstmt.setString(1, memId);
 	        pstmt.executeUpdate();
-
+	        System.out.println("회원 탈퇴 신청 성공");
 	        conn.commit();
 	        result = true;
 	    } catch (SQLException e) {
@@ -305,7 +305,8 @@ public class MemberDAO {
 	}
 	
 	public boolean memberDelete(String memId) {
-		String query = "update members set memberStatus = 'pause' where id = ?";
+		
+		String query = "delete from members where id = ?";
 	    boolean result = false;
 
 	    try {
@@ -313,7 +314,7 @@ public class MemberDAO {
 	        pstmt = conn.prepareStatement(query);
 	        pstmt.setString(1, memId);
 	        pstmt.executeUpdate();
-
+	        System.out.println("회원 탈퇴 성공");
 	        conn.commit();
 	        result = true;
 	    } catch (SQLException e) {

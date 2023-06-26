@@ -59,10 +59,11 @@ th {
             });
         });
 		// row 클릭 시 해당 user의 정보를 수정할 수 있도록 페이지 전환
+		/*
 		$("tr.member-row").click(function() {
 	        var userId = $(this).data("id");
 	        window.location.href = "modify.jsp?id=" + userId;
-	    });
+	    });*/
 	});
 	
 
@@ -70,6 +71,7 @@ th {
 </head>
 <body>
 	<%
+	MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
 	MemberDAO memberDAO = new MemberDAO();
 	ArrayList<MemberDTO> dtos = memberDAO.memberSelectAll();
 	%>
@@ -92,7 +94,8 @@ th {
 			<td><%=dto.getName()%></td>
 			<td><%=dto.getId()%></td>
 			<td><%=dto.getPw()%></td>
-			<td><%=dto.getPhone()%></td>
+			<!--  관리자 본인의 전화번호만 보이고, 나머지는 가림 -->
+			<td><%=(loginUser.getId().equals(dto.getId()) ? dto.getPhone() : "010-XXXX-XXXX")%></td>
 			<td><%=dto.getEmail()%></td>
 			<td><%=dto.getMemberStatus()%></td>
 			<td><%=dto.getMemberRole()%></td>
