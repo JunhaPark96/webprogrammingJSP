@@ -9,23 +9,68 @@
 <meta charset="EUC-KR">
 <title>회원 관리</title>
 <style>
-table {
+.table-container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #f8f8f8;
+	border: 1px solid #eaeaea;
+	border-radius: 4px;
+}
+
+.table-container table {
 	width: 100%;
 	border-collapse: collapse;
 }
 
-th, td {
+.table-container th, .table-container td {
 	padding: 8px;
 	text-align: left;
 	border-bottom: 1px solid #ddd;
 }
 
-th {
+.table-container th {
 	background-color: #f2f2f2;
 }
-tr.member-row:hover {
-    background-color: #f9f9f9;
+
+.table-container tr.member-row:hover {
+	background-color: #f9f9f9;
 }
+
+.action-buttons {
+	display: flex;
+	gap: 5px;
+}
+
+.action-buttons button {
+	border: none;
+	border-radius: 4px;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.action-buttons .approve-button {
+	background-color: #4CAF50;
+	color: white;
+}
+
+.action-buttons .approve-button:hover {
+	background-color: #45a049;
+}
+
+.action-buttons .delete-button {
+	background-color: #f44336;
+	color: white;
+}
+
+.action-buttons .delete-button:hover {
+	background-color: #d32f2f;
+}
+
+.member-row td {
+	cursor: pointer;
+}
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
@@ -48,7 +93,7 @@ tr.member-row:hover {
 				}
 			});
 		});
-		// 탈퇴 처리 로직. 버튼을 쿨릭하면 DB에서 회원 삭제
+		// 탈퇴 처리 로직. 버튼을 클릭하면 DB에서 회원 삭제
 		$(".delete-button").click(function() {
             var userId = $(this).data("id");
             $.post("deleteOk.jsp", {
@@ -79,50 +124,54 @@ tr.member-row:hover {
 	MemberDAO memberDAO = new MemberDAO();
 	ArrayList<MemberDTO> dtos = memberDAO.memberSelectAll();
 	%>
-	<table>
-		<tr>
-			<th>이름</th>
-			<th>아이디</th>
-			<th>비밀번호</th>
-			<th>전화번호</th>
-			<th>이메일</th>
-			<th>회원상태</th>
-			<th>회원권한</th>
-			<th></th>
-		</tr>
-		<%
-		for (int i = 0; i < dtos.size(); i++) {
-			MemberDTO dto = dtos.get(i);
-		%>
-		<tr class="member-row" data-id="<%=dto.getId()%>">
-			<td><%=dto.getName()%></td>
-			<td><%=dto.getId()%></td>
-			<td><%=dto.getPw()%></td>
-			<!--  관리자 본인의 전화번호만 보이고, 나머지는 가림 -->
-			<td><%=(loginUser.getId().equals(dto.getId()) ? dto.getPhone() : "010-XXXX-XXXX")%></td>
-			<td><%=dto.getEmail()%></td>
-			<td><%=dto.getMemberStatus()%></td>
-			<td><%=dto.getMemberRole()%></td>
-			<td>
-				<%
-				if (dto.getMemberStatus().equals("pending")) {
-				%>
-				<button class="approve-button" data-id="<%=dto.getId()%>">승인</button>
-				<%
-				}
-				%>
-				<%
-       			 if (dto.getMemberStatus().equals("pause")) {
-        		%>
-        		<button class="delete-button" data-id="<%=dto.getId()%>">삭제</button>
-        		<%
-        		}
-        		%>
-			</td>
-		</tr>
-		<%
-		}
-		%>
-	</table>
+	<div class="table-container">
+		<table>
+			<tr>
+				<th>이름</th>
+				<th>아이디</th>
+				<th>비밀번호</th>
+				<th>전화번호</th>
+				<th>이메일</th>
+				<th>회원상태</th>
+				<th>회원권한</th>
+				<th></th>
+			</tr>
+			<%
+			for (int i = 0; i < dtos.size(); i++) {
+				MemberDTO dto = dtos.get(i);
+			%>
+			<tr class="member-row" data-id="<%=dto.getId()%>">
+				<td><%=dto.getName()%></td>
+				<td><%=dto.getId()%></td>
+				<td><%=dto.getPw()%></td>
+				<!--  관리자 본인의 전화번호만 보이고, 나머지는 가림 -->
+				<td><%=(loginUser.getId().equals(dto.getId()) ? dto.getPhone() : "010-XXXX-XXXX")%></td>
+				<td><%=dto.getEmail()%></td>
+				<td><%=dto.getMemberStatus()%></td>
+				<td><%=dto.getMemberRole()%></td>
+				<td>
+					<div class="action-buttons">
+						<%
+						if (dto.getMemberStatus().equals("pending")) {
+						%>
+						<button class="approve-button" data-id="<%=dto.getId()%>">승인</button>
+						<%
+						}
+						%>
+						<%
+	       			 if (dto.getMemberStatus().equals("pause")) {
+	        		%>
+	        		<button class="delete-button" data-id="<%=dto.getId()%>">삭제</button>
+	        		<%
+	        		}
+	        		%>
+					</div>
+				</td>
+			</tr>
+			<%
+			}
+			%>
+		</table>
+	</div>
 </body>
 </html>

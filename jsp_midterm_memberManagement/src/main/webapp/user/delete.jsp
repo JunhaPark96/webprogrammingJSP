@@ -21,6 +21,7 @@
     // memberStatus가 null이 아니면서 "normal" 상태일 때만 회원 탈퇴 신청 가능
     if (loginUser.getMemberStatus() != null && loginUser.getMemberStatus().equals("normal")){
         memberDAO.memberQuit(id);
+        out.println("<script>alert('탈퇴신청 완료되었습니다');</script>");
         // 세션 종료 후 main 페이지 이동
         session.invalidate();
         response.sendRedirect("../common/main.jsp");
