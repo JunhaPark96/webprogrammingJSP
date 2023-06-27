@@ -49,7 +49,7 @@ response.setCharacterEncoding("EUC-KR");
 
 	if (result) {
 		// 수정 성공 메시지 출력
-		out.println("<script>alert('회원정보가 성공적으로 수정되었습니다.'); location.href='../common/main.jsp';</script>");
+		out.println("<script>alert('회원정보가 성공적으로 수정되었습니다.'); location.href='memberManagement.jsp';</script>");
 	} else {
 		// 수정 실패 메시지 출력
 		out.println("<script>alert('회원정보 수정에 실패하였습니다.'); history.back();</script>");

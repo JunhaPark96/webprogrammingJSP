@@ -48,18 +48,19 @@ response.setCharacterEncoding("EUC-KR");
     }
 
     .form-group input[type="submit"] {
-        background-color: #4CAF50;
+        background-color: #0A82FF;
         color: white;
         cursor: pointer;
     }
 
     .form-group input[type="submit"]:hover {
-        background-color: #45a049;
+        background-color: #64A0FF;
     }
 
     .form-group .radio-group {
         display: flex;
-        justify-content: center;
+        text-align: center;
+        margin-right: 15px;
     }
 
     .form-group .radio-group label {
@@ -68,10 +69,22 @@ response.setCharacterEncoding("EUC-KR");
         padding: 4px 8px;
         border-radius: 4px;
         cursor: pointer;
+        margin-right: 15px;
     }
 
     .form-group .radio-group input[type="radio"] {
         margin-right: 5px;
+    }
+    .status-box, .role-box {
+        cursor: pointer;
+        padding: 4px 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .status-box.active, .role-box.active {
+        background-color: #0A82FF;
+        color: white;
     }
 </style>
 <script>
@@ -90,15 +103,43 @@ response.setCharacterEncoding("EUC-KR");
         }
         return true;
     }
+    function toggleActiveStatus(event, status) {
+        // 모든 상태 상자의 active 클래스 제거
+        document.querySelectorAll('.status-box').forEach(function(box) {
+            box.classList.remove('active');
+        });
+        // 클릭한 상태 상자에 active 클래스 추가
+        event.target.classList.add('active');
+
+        // hidden input의 값을 업데이트
+        document.getElementById('userMemberStatus').value = status;
+    }
+
+    function toggleActiveRole(event, role) {
+        // 모든 역할 상자의 active 클래스 제거
+        document.querySelectorAll('.role-box').forEach(function(box) {
+            box.classList.remove('active');
+        });
+        // 클릭한 역할 상자에 active 클래스 추가
+        event.target.classList.add('active');
+
+        // hidden input의 값을 업데이트
+        document.getElementById('userMemberRole').value = role;
+    }
 </script>
 </head>
 <body>
     <%
     String id = request.getParameter("id");
-    // session의 정보로 로그인 한 유정보 받아오기
+    // session의 정보로 로그인한 유저정보 받아오기
     MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
     MemberDAO memberDAO = new MemberDAO();
     MemberDTO member = memberDAO.memberFind(id);
+    /*
+    if(member == null) {
+        out.println(member.getPhone());
+        return;
+    }*/
     
     // 전화번호 마스킹 처리
     String phone = member.getPhone();
@@ -115,32 +156,39 @@ response.setCharacterEncoding("EUC-KR");
                 <input type="password" id="pw" name="pw">
             </div>
             <div class="form-group">
-                <label for="name">이름</label>
-                <input type="text" id="name" name="name" placeholder="<%=member.getName()%>">
-            </div>
+    			<label for="name">이름</label>
+   				 <input type="text" id="name" name="name" value="<%=member.getName()%>">
+			</div>
             <div class="form-group">
                 <label for="phone">전화번호</label>
-                <input type="text" id="phone" name="phone" value="<%=maskedPhone%>" readonly>
+                <input type="text" id="phone" name="phone" value="<%=member.getPhone()%>" readonly>
             </div>
             <div class="form-group">
-                <label for="email">이메일</label>
-                <input type="text" id="email" name="email" placeholder="<%=member.getEmail()%>">
-            </div>
+    			<label for="email">이메일</label>
+    			<input type="text" id="email" name="email" value="<%=member.getEmail()%>">
+			</div>
             <div class="form-group">
-                <label>회원상태:</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="memberStatus" value="pending" <%=member.getMemberStatus().equals("pending") ? "checked" : ""%>>가입승인 대기</label>
-                    <label><input type="radio" name="memberStatus" value="normal" <%=member.getMemberStatus().equals("normal") ? "checked" : ""%>>정상</label>
-                    <label><input type="radio" name="memberStatus" value="pause" <%=member.getMemberStatus().equals("pause") ? "checked" : ""%>>정지</label>
-                </div>
-            </div>
+        		<label>회원상태</label>
+        			<div class="status-group">
+            			<div class="status-box <%=member.getMemberStatus().equals("pending") ? "active" : ""%>"
+                 			onclick="toggleActiveStatus(event, 'pending')">가입승인 대기</div>
+            		<div class="status-box <%=member.getMemberStatus().equals("normal") ? "active" : ""%>"
+                 			onclick="toggleActiveStatus(event, 'normal')">정상</div>
+            		<div class="status-box <%=member.getMemberStatus().equals("pause") ? "active" : ""%>"
+                 			onclick="toggleActiveStatus(event, 'pause')">정지</div>
+        			</div>
+    		</div>
+            <input type="hidden" id="userMemberStatus" name="userMemberStatus" value="<%=member.getMemberStatus()%>">
             <div class="form-group">
-                <label>회원권한:</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="memberRole" value="user" <%=member.getMemberRole().equals("user") ? "checked" : ""%>>유저</label>
-                    <label><input type="radio" name="memberRole" value="admin" <%=member.getMemberRole().equals("admin") ? "checked" : ""%>>관리자</label>
-                </div>
-            </div>
+        		<label>회원권한</label>
+        		<div class="role-group">
+            		<div class="role-box <%=member.getMemberRole().equals("user") ? "active" : ""%>"
+                 		onclick="toggleActiveRole(event, 'user')">유저</div>
+            		<div class="role-box <%=member.getMemberRole().equals("admin") ? "active" : ""%>"
+                 		onclick="toggleActiveRole(event, 'admin')">관리자</div>
+        		</div>
+    		</div>
+   			 <input type="hidden" id="userMemberRole" name="userMemberRole" value="<%=member.getMemberRole()%>">
             <!--  관리자가 아닌 유저의 정보를 보내기 위함 -->
             <input type="hidden" name="id" value="<%=member.getId()%>">
             <input type="hidden" name="userPw" value="<%=member.getPw()%>">
@@ -155,5 +203,7 @@ response.setCharacterEncoding("EUC-KR");
             </div>
         </form>
     </div>
+    <%System.out.println(member);
+    %>
 </body>
 </html>

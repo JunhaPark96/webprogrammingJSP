@@ -42,13 +42,13 @@ response.setCharacterEncoding("EUC-KR");
     }
 
     .form-group input[type="submit"] {
-        background-color: #4CAF50;
+        background-color: #0A82FF;
         color: white;
         cursor: pointer;
     }
 
     .form-group input[type="submit"]:hover {
-        background-color: #45a049;
+        background-color: #64A0FF;
     }
 </style>
 <script>
@@ -77,6 +77,9 @@ response.setCharacterEncoding("EUC-KR");
 </head>
 <body>
     <%
+    if (session.getAttribute("loginUser") == null){
+    	response.sendRedirect("../common/main.jsp");
+    }
     // session의 정보로 로그인 한 유저에 대한 정보 받아오기
     MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
     String id = loginUser.getId();

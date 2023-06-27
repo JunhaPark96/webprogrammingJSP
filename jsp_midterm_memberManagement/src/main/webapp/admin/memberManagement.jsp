@@ -67,9 +67,27 @@
 	background-color: #d32f2f;
 }
 
+#go-main-page {
+    border: none;
+	border-radius: 4px;
+	padding: 10px 20px;
+	cursor: pointer;
+	margin-top: 10px;
+	background-color: #008CBA;
+	color: white;
+	text-align: center;
+	display: block;
+	width: 100%;
+}
+
+#go-main-page:hover {
+    background-color: #007B9A;
+}
+
 .member-row td {
 	cursor: pointer;
 }
+
 
 </style>
 <script
@@ -113,9 +131,11 @@
 			var userId = $(this).data("id");
 			window.location.href = "modifyAdmin.jsp?id=" + userId;
 		});
+		// 메인 페이지로 이동하는 버튼의 클릭 이벤트를 설정
+    	$("#go-main-page").click(function() {
+        	window.location.href = "../common/main.jsp";
+    	});
 	});
-	
-
 </script>
 </head>
 <body>
@@ -124,8 +144,10 @@
 	MemberDAO memberDAO = new MemberDAO();
 	ArrayList<MemberDTO> dtos = memberDAO.memberSelectAll();
 	%>
+	
 	<div class="table-container">
 		<table>
+			<button id="go-main-page">메인 페이지로 이동</button>
 			<tr>
 				<th>이름</th>
 				<th>아이디</th>

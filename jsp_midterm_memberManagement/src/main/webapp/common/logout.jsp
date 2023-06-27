@@ -9,7 +9,7 @@
 <body>
 	<%
 		session.invalidate();
-		response.sendRedirect("main.jsp");
+		out.println("<script>alert('로그아웃 되었습니다.'); location.href='main.jsp';</script>");
 		System.out.println("로그아웃 성공");
 	%>
 </body>

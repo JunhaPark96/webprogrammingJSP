@@ -32,26 +32,22 @@ MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <% if (loginUser != null) {
-            if (loginUser.getMemberRole() != null && loginUser.getMemberRole().equals("admin")) { %>
-              <li class="nav-item active">
-                <a class="nav-link" href="../admin/memberManagement.jsp">회원 관리</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="../common/logout.jsp">로그아웃</a>
-              </li>
-          <% } else { %>
-              <li class="nav-item">
-                <a class="nav-link" href="../user/modify.jsp">회원정보 수정</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="../common/logout.jsp">로그아웃</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="../user/delete.jsp">회원탈퇴</a>
-              </li>
-          <% } 
-        } else { %>
+      <% if (loginUser != null) { %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%=loginUser.getName() + "님의 메뉴"%>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <% if (loginUser.getMemberRole() != null && loginUser.getMemberRole().equals("admin")) { // 관리자의 경우%>
+                <a class="dropdown-item" href="../admin/memberManagement.jsp">회원 관리</a>
+              <% } else { %>
+                <a class="dropdown-item" href="../user/modify.jsp">회원정보 수정</a>
+                <a class="dropdown-item" href="../user/delete.jsp">회원탈퇴</a>
+              <% } %>
+              <a class="dropdown-item" href="../common/logout.jsp">로그아웃</a>
+            </div>
+          </li>
+      <% } else { // 사용자의 경우%>
           <li class="nav-item">
             <a class="nav-link" href="../common/login.jsp">로그인</a>
           </li>
