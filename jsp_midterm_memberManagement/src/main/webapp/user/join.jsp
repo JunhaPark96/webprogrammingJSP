@@ -35,13 +35,13 @@ response.setCharacterEncoding("EUC-KR");
     }
 
     .form-group input[type="submit"] {
-        background-color: #4CAF50;
+        background-color: #0A82FF;
         color: white;
         cursor: pointer;
     }
 
     .form-group input[type="submit"]:hover {
-        background-color: #45a049;
+        background-color: #64A0FF;
     }
 
     .error-message {

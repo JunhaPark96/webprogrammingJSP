@@ -39,6 +39,9 @@
 	out.println("id : " + request.getParameter("id") + "<br/>");
 	out.println("비밀번호 : " + request.getParameter("passwd") + "<br/>");
 	out.println("취미 : " + Arrays.toString(hobby) + "<br/>");
+	out.println("포트번호: " + request.getServerPort() + "<br/>");
+	out.println("요청방식: " + request.getMethod() +  "<br/>");
+	out.println("Context Path: " + request.getContextPath() + "<br/>");
 	%>
 	
 	

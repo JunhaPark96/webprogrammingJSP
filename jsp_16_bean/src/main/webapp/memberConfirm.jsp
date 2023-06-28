@@ -12,5 +12,8 @@
 	비밀번호: <jsp:getProperty property="passwd" name="member"/>
 	이름: <jsp:getProperty property="name" name="member"/>
 	이메일: <jsp:getProperty property="email" name="member"/>
+	<%
+	session.invalidate();
+	%>
 </body>
 </html>

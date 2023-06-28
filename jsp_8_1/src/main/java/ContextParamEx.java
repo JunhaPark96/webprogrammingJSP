@@ -22,9 +22,9 @@ public class ContextParamEx extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=utf-8");
-		ServletContext sc = getServletContext();
-		String dbName = sc.getInitParameter("dbName");
-		String dbPwd = sc.getInitParameter("dbPwd");
+		//ServletContext sc = getServletContext();
+		String dbName = getServletContext().getInitParameter("dbName");
+		String dbPwd = getServletContext().getInitParameter("dbPwd");
 		System.out.println("dbName : " + dbName + " dbPwd : " + dbPwd);
 		
 		PrintWriter pw = response.getWriter();

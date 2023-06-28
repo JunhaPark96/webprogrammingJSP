@@ -15,15 +15,11 @@
 	%>
 
 	<jsp:useBean id="member" class="jsp_16_bean.MemberBean" scope="session"></jsp:useBean>
-	<jsp:setProperty property="id" name="member" param="id"/>
-	<jsp:setProperty property="passwd" name="member" param="passwd"/>
-	<jsp:setProperty property="name" name="member" param="name"/>
-	<jsp:setProperty property="email" name="member" param="email"/>
 	
 	<jsp:setProperty property="id" name="member" value="<%=id%>"/>
-	<jsp:setProperty property="passwd" name="member" param="<%=passwd%>"/>
-	<jsp:setProperty property="name" name="member" param="<%=name%>"/>
-	<jsp:setProperty property="email" name="member" param="<%=member%>"/>
+	<jsp:setProperty property="passwd" name="member" value="<%=passwd%>"/>
+	<jsp:setProperty property="name" name="member" value="<%=name%>"/>
+	<jsp:setProperty property="email" name="member" value="<%=email%>"/>
 	
 	<%
 	response.sendRedirect("memberConfirm.jsp");

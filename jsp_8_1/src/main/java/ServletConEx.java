@@ -14,6 +14,7 @@ import java.io.PrintWriter;
  * Servlet implementation class ServletConEx
  */
 //@WebServlet(urlPatterns= {"/ServletConEx"}, initParams= {@WebInitParam(name="dbName", value="oracle"), @WebInitParam(name="dbPwd", value="1234")})
+@WebServlet(name = "servletConEx", urlPatterns = "/ServletConEx", initParams = {@WebInitParam(name="dbName", value="1234")})
 public class ServletConEx extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,7 +34,10 @@ public class ServletConEx extends HttpServlet {
 		String dbName = getInitParameter("dbName");
 		String dbPwd = getInitParameter("dbPwd");
 		System.out.println("dbName : " + dbName + " dbPwd : " + dbPwd);
+		String sn = getServletName();
+		System.out.println("sn: " + sn);
 		
+		System.out.println();
 		PrintWriter pw = response.getWriter();
 		pw.println("<html>");
 		pw.println("<head>");

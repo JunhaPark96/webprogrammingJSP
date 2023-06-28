@@ -16,12 +16,12 @@
 		<description></description>
 		<display-name>ServletConEx</display-name>
 		<servlet-name>ServletConEx</servlet-name>
-		<servlet-class>ServletConEx</servlet-class>
+		<servlet-class></servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>ServletConEx</servlet-name>
-		<url-pattern>/ServletConEx</url-pattern>
+		<url-pattern></url-pattern>
 	</servlet-mapping>
 
 	<display-name>jsp_8_1</display-name>

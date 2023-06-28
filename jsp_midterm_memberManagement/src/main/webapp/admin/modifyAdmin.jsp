@@ -161,7 +161,7 @@ response.setCharacterEncoding("EUC-KR");
 			</div>
             <div class="form-group">
                 <label for="phone">전화번호</label>
-                <input type="text" id="phone" name="phone" value="<%=member.getPhone()%>" readonly>
+                <input type="text" id="phone" name="phone" value="<%=maskedPhone%>" readonly>
             </div>
             <div class="form-group">
     			<label for="email">이메일</label>

@@ -68,7 +68,7 @@
 <body>
     <div class="login-container">
         <h1 class="login-title">환영합니다! 로그인 해주십시오</h1>
-        <form name="loginForm" action="loginOk.jsp" method="post" onsubmit="return validateForm()">
+        <form name="loginForm" action="/LoginOk" method="post" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="id">아이디:</label>
                 <input type="text" class="form-control" id="id" name="id">

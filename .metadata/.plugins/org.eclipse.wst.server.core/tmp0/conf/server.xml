@@ -134,7 +134,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\jsp_midterm_memberManagement" path="/jsp_midterm_memberManagement" reloadable="true" source="org.eclipse.jst.jee.server:jsp_midterm_memberManagement"/></Host>
+      <Context docBase="C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\jsp_23_el" path="/jsp_23_el" reloadable="true" source="org.eclipse.jst.jee.server:jsp_23_el"/><Context docBase="C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\jsp_midterm_memberManagement" path="/jsp_midterm_memberManagement" reloadable="true" source="org.eclipse.jst.jee.server:jsp_midterm_memberManagement"/><Context docBase="C:\Users\JUNHA\JspProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\jsp_24_jstl" path="/jsp_24_jstl" reloadable="true" source="org.eclipse.jst.jee.server:jsp_24_jstl"/></Host>
     </Engine>
   </Service>
 </Server>
