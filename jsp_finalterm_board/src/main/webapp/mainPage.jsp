@@ -41,7 +41,7 @@ body {
 							<tr>
 								<th scope="row">${board.id}</th>
 								<td>${board.writer}</td>
-								<td>${board.title}</td>
+								<td><a href="contentPage.do?id=${board.id}">${board.title}</a></td>
 								<td>${board.writtenDate}</td>
 								<td>${board.views}</td>
 							</tr>

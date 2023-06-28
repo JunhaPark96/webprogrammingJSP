@@ -55,11 +55,11 @@ public class BoardDAO {
 			try {
 				if (rs != null) {
 					rs.close();
-					System.out.println("rs 종료");
+					System.out.println("리스트 rs 종료");
 				}
 				if (pstmt != null) {
 					pstmt.close();
-					System.out.println("pstmt 종료");
+					System.out.println("리스트 pstmt 종료");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -67,51 +67,121 @@ public class BoardDAO {
 		}
 		return dtos;
 	}
+
 	// 새 글 작성
-	public void insertNewContent(BoardDTO dto) throws SQLException {
-	    PreparedStatement pstmt = null;
-	    ResultSet rs = null;
+	public void insertNewContent(BoardDTO dto) {
+		try {
+			conn.setAutoCommit(false);
+			// default를 제외한 새 글 작성 내용 insert
+			String insertQuery = "insert into mvc_board(writer, title, content) values(?, ?, ?)";
+			pstmt = conn.prepareStatement(insertQuery, new String[] { "ID" });
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getTitle());
+			pstmt.setString(3, dto.getContent());
+			pstmt.executeUpdate();
 
-	    try {
-	        conn.setAutoCommit(false);
-	        // default를 제외한 새 글 작성 내용 insert
-	        String insertQuery = "insert into mvc_board(writer, title, content) values(?, ?, ?)";
-	        pstmt = conn.prepareStatement(insertQuery, new String[]{"ID"});
-	        pstmt.setString(1, dto.getWriter());
-	        pstmt.setString(2, dto.getTitle());
-	        pstmt.setString(3, dto.getContent());
-	        pstmt.executeUpdate();
+			rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				int id = rs.getInt(1);
+				dto.setId(id);
+			}
+			// category를 id와 동일하게 변경
+			String updateQuery = "update mvc_board set category = ? where id = ?";
+			pstmt = conn.prepareStatement(updateQuery);
+			pstmt.setInt(1, dto.getId());
+			pstmt.setInt(2, dto.getId());
+			pstmt.executeUpdate();
 
-	        rs = pstmt.getGeneratedKeys();
-	        if (rs.next()) {
-	            int id = rs.getInt(1);
-	            dto.setId(id);
-	        }
-	        // category를 id와 동일하게 변경
-	        String updateQuery = "update mvc_board set category = ? where id = ?";
-	        pstmt = conn.prepareStatement(updateQuery);
-	        pstmt.setInt(1, dto.getId());
-	        pstmt.setInt(2, dto.getId());
-	        pstmt.executeUpdate();
+			conn.commit();
 
-	        conn.commit();
-
-	    } catch (SQLException e) {
-	        try {
-	            conn.rollback();
-	        } catch (SQLException e1) {
-	            e1.printStackTrace();
-	        }
-	        throw e;
-	    } finally {
-	        if (rs != null) {
-	            rs.close();
-	        }
-	        if (pstmt != null) {
-	            pstmt.close();
-	        }
-	    }
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
+	// 게시물 ID를 사용하여 해당 게시물의 정보를 DB에서 추출
+	// 가져온 게시물 정보를 BoardDTO 객체에 저장하고 반환
+	public BoardDTO fetchBoardById(int id) {
+		BoardDTO board = null;
+		String query = "select * from mvc_board where id = ?";
+	
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+			
+			System.out.println("Query executed: " + query);  
+		    System.out.println("Query parameter: " + id);  
+			
+			if (rs.next()) {
+				board = new BoardDTO();
+				board.setId(rs.getInt("id"));
+				board.setViews(rs.getInt("views"));
+				board.setWriter(rs.getString("writer"));
+                board.setTitle(rs.getString("title"));
+                board.setContent(rs.getString("content"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+					System.out.println("상세 rs 종료");
+				}
+				if (pstmt != null) {
+					pstmt.close();
+					System.out.println("상세 pstmt 종료");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return board;
+	}
+	
+	public void increaseCount(int id) {
+		String query = "update mvc_board set views = views + 1 where id = ?";
+
+		try {
+			conn.setAutoCommit(false);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, id);
+			pstmt.executeUpdate();
+			
+			System.out.println("Query executed: " + query);  // 추가
+		    System.out.println("Query parameter: " + id);  // 추가
+			
+			conn.commit();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }

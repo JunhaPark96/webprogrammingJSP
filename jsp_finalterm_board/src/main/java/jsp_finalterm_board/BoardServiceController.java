@@ -26,18 +26,25 @@ public class BoardServiceController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String uri = request.getRequestURI();
-		System.out.println("uri : " + uri);
-
 		String conPath = request.getContextPath();
-		System.out.println("conPath : " + conPath);
-
 		String command = uri.substring(conPath.length());
+
+		System.out.println("uri : " + uri);
+		System.out.println("conPath : " + conPath);
 		System.out.println("command : " + command);
-		// 전체 리스트 표시
+
+		// 전체 리스트 표시 메인 페이지
 		if (command.equals("/mainPage.do")) {
 			ArrayList<BoardDTO> boardList = service.listAll(request, response);
 			request.setAttribute("boardList", boardList);
 			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
+		} else if (command.equals("/contentPage.do")) {
+			// 상세 페이지 이동
+			System.out.println("Requested id: " + request.getParameter("id"));
+			BoardDTO board = service.getBoard(request, response);
+			System.out.println("Retrieved board: " + board);
+			request.setAttribute("board", board);
+			request.getRequestDispatcher("/contentPage.jsp").forward(request, response);
 		}
 	}
 
@@ -56,7 +63,7 @@ public class BoardServiceController extends HttpServlet {
 			ArrayList<BoardDTO> boardList = service.writeAndListAll(request, response);
 			request.setAttribute("boardList", boardList);
 			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
-		}
+		} 
 	}
 
 }

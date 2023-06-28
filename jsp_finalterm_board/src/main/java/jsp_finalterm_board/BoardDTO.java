@@ -39,6 +39,14 @@ public class BoardDTO {
 		this.boardLevel = boardLevel;
 		this.replyDepth = replyDepth;
 	}
+	
+	public BoardDTO(int id, String writer, String title, String content, int views) {
+		this.id = id;
+		this.writer = writer;
+		this.title = title;
+		this.content = content;
+		this.views = views;
+	}
 	public int getId() {
 		return id;
 	}

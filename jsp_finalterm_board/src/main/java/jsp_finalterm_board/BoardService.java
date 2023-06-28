@@ -12,5 +12,6 @@ public interface BoardService {
 	public void contentWrite(HttpServletRequest request, HttpServletResponse response);
 	// 글 작성 후 다시 목록 조회
 	public ArrayList<BoardDTO> writeAndListAll(HttpServletRequest request, HttpServletResponse response);
-	
+	// 상세 페이지 조회
+	BoardDTO getBoard(HttpServletRequest request, HttpServletResponse response);
 }
