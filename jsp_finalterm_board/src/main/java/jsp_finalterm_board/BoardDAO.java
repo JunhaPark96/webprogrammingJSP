@@ -21,14 +21,15 @@ public class BoardDAO {
 
 	// 싱글톤 인스턴스
 	private static final BoardDAO instance = new BoardDAO();
+
 	public static BoardDAO getInstance() {
 		return instance;
 	}
-	
-	public ArrayList<BoardDTO> listAll(){
+
+	public ArrayList<BoardDTO> listAll() {
 		ArrayList<BoardDTO> dtos = new ArrayList<BoardDTO>();
 		String query = "select * from MVC_BOARD";
-		
+
 		try {
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
@@ -42,9 +43,9 @@ public class BoardDAO {
 				int category = rs.getInt("category");
 				int boardLevel = rs.getInt("boardLevel");
 				int replyDepth = rs.getInt("replyDepth");
-				
-				
-				BoardDTO dto = new BoardDTO(id, writer, title, content, writtenDate, views, category, boardLevel, replyDepth);
+
+				BoardDTO dto = new BoardDTO(id, writer, title, content, writtenDate, views, category, boardLevel,
+						replyDepth);
 				dtos.add(dto);
 
 			}
@@ -66,49 +67,51 @@ public class BoardDAO {
 		}
 		return dtos;
 	}
-	
-	public boolean insertNewContent(BoardDTO dto){
-		pstmt = null;
-		String query = "insert into mvc_board(writer, title, content, category) values (?, ?, ?, ?)";
-		boolean result = false;
-		try {
-			while (rs.next()) {
-				conn.setAutoCommit(false);
-				pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, dto.getWriter());
-				pstmt.setString(2, dto.getTitle());
-				pstmt.setString(3, dto.getContent());
-				pstmt.setInt(4, dto.getCategory());
+	// 새 글 작성
+	public void insertNewContent(BoardDTO dto) throws SQLException {
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
 
-				int newContent = pstmt.executeUpdate();
-				if (newContent > 0) {
-					result = true;
-					conn.commit();
-				}
+	    try {
+	        conn.setAutoCommit(false);
+	        // default를 제외한 새 글 작성 내용 insert
+	        String insertQuery = "insert into mvc_board(writer, title, content) values(?, ?, ?)";
+	        pstmt = conn.prepareStatement(insertQuery, new String[]{"ID"});
+	        pstmt.setString(1, dto.getWriter());
+	        pstmt.setString(2, dto.getTitle());
+	        pstmt.setString(3, dto.getContent());
+	        pstmt.executeUpdate();
 
-			}
-		} catch (SQLException e) {
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-					System.out.println("rs 종료");
-				}
-				if (pstmt != null) {
-					pstmt.close();
-					System.out.println("pstmt 종료");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
+	        rs = pstmt.getGeneratedKeys();
+	        if (rs.next()) {
+	            int id = rs.getInt(1);
+	            dto.setId(id);
+	        }
+	        // category를 id와 동일하게 변경
+	        String updateQuery = "update mvc_board set category = ? where id = ?";
+	        pstmt = conn.prepareStatement(updateQuery);
+	        pstmt.setInt(1, dto.getId());
+	        pstmt.setInt(2, dto.getId());
+	        pstmt.executeUpdate();
+
+	        conn.commit();
+
+	    } catch (SQLException e) {
+	        try {
+	            conn.rollback();
+	        } catch (SQLException e1) {
+	            e1.printStackTrace();
+	        }
+	        throw e;
+	    } finally {
+	        if (rs != null) {
+	            rs.close();
+	        }
+	        if (pstmt != null) {
+	            pstmt.close();
+	        }
+	    }
 	}
-	
+
+
 }

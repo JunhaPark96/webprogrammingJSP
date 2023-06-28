@@ -16,6 +16,9 @@ public class BoardDTO {
 	
 	
 	
+	public BoardDTO() {
+		super();
+	}
 	public BoardDTO(int id, String writer, String title, Date writtenDate, int views) {
 		this.id = id;
 		this.writer = writer;

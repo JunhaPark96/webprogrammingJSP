@@ -9,6 +9,9 @@ public class MemberDTO {
 	
 	
 	
+	public MemberDTO() {
+	}
+	
 	public MemberDTO(String id, String pw, String name, String phone, String gender) {
 		this.id = id;
 		this.pw = pw;

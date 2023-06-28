@@ -44,17 +44,17 @@ public class BoardServiceController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String uri = request.getRequestURI();
-		System.out.println("uri : " + uri);
-
 		String conPath = request.getContextPath();
-		System.out.println("conPath : " + conPath);
-
 		String command = uri.substring(conPath.length());
+
+		System.out.println("uri : " + uri);
+		System.out.println("conPath : " + conPath);
 		System.out.println("command : " + command);
 
 		if (command.equals("/newWriting.do")) {
-			
-//			request.setAttribute("boardList", boardList);
+			System.out.println("새글작성");
+			ArrayList<BoardDTO> boardList = service.writeAndListAll(request, response);
+			request.setAttribute("boardList", boardList);
 			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
 		}
 	}
