@@ -16,6 +16,11 @@ public class MemberDAO {
 		this.jdbc = JDBC.getInstance();
 		this.conn = jdbc.getConnection();
 	}
+	// 싱글톤 인스턴스
+	private static final MemberDAO instance = new MemberDAO();
+	public static MemberDAO getInstance() {
+		return instance;
+	}
 	// 멤버 리스트 확인
 	public ArrayList<MemberDTO> memberSelectAll() {
 		ArrayList<MemberDTO> dtos = new ArrayList<MemberDTO>();

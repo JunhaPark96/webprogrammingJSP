@@ -15,7 +15,7 @@
 </head>
 <body>
 	<h1>환영합니다! 로그인 해주십시오</h1>
-	<form action="loginOk.jsp" method="post">
+	<form action="login.do" method="post">
 		아이디: 	<input type="text" name="id"> <br>
 		비밀번호: 	<input type="password" name="pw"> <br>
 		<input type="submit" value="로그인">

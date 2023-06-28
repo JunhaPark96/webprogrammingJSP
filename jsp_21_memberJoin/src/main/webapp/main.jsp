@@ -10,7 +10,8 @@
 <body>
 	<%
 	// 로그인된 사용자 정보 가져오기
-	MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
+	//MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
+	MemberDTO loginUser = (MemberDTO) request.getAttribute("id");
 	if (loginUser != null) {
 		// 로그인 한 경우
 	%>
@@ -27,7 +28,5 @@
 	<%
 	}
 	%>
-
-
 </body>
 </html>
