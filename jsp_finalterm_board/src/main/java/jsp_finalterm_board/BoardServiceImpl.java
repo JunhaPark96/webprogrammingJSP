@@ -78,7 +78,7 @@ public class BoardServiceImpl implements BoardService {
 	public BoardDTO writeReply(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String writer = request.getParameter("writer");
-		String title = request.getParameter("writer");
+		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		
 		BoardDTO newDto = new BoardDTO();
@@ -90,6 +90,12 @@ public class BoardServiceImpl implements BoardService {
 
 		bDAO.insertReplyContent(newDto, oldDto);
 		return bDAO.fetchBoardById(newDto.getId()); // 답글 반환
+	}
+	
+	@Override
+	public ArrayList<BoardDTO> replyAndListAll(HttpServletRequest request, HttpServletResponse response) {
+		writeReply(request, response);
+		return listAll(request, response);
 	}
 
 }

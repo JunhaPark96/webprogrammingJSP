@@ -60,11 +60,12 @@
 						<input type="hidden" name="id" value="${board.id}">
 						<button type="submit" class="btn btn-danger">삭제</button>
 					</form>
-					<form action="replyBoard.do" method="post"
+					<%-- <form action="replyBoard.do" method="post"
 						style="display: inline-block;">
 						<input type="hidden" name="id" value="${board.id}">
 						<button type="submit" class="btn btn-success">답변</button>
-					</form>
+					</form>  --%>
+					<a href="replyPage.jsp?id=${board.id}" class="btn btn-success">답변</a>
 					<a href="mainPage.do" class="btn btn-secondary">목록보기</a>
 				</div>
 			</div>

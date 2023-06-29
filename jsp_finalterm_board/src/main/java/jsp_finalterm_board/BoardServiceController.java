@@ -45,6 +45,18 @@ public class BoardServiceController extends HttpServlet {
 			System.out.println("Retrieved board: " + board);
 			request.setAttribute("board", board);
 			request.getRequestDispatcher("/contentPage.jsp").forward(request, response);
+		} else if (command.equals("/replyPage.do")) {
+		    // 원글 데이터 불러오기
+		    BoardDTO board = service.getBoard(request, response);
+		    // 원글 데이터를 request에 넣기
+		    request.setAttribute("board", board);
+		    // 페이지로 포워딩
+		    System.out.println("=============================================");
+		    System.out.println(board.getId());
+		    System.out.println(board.getContent());
+		    System.out.println(board.getCategory());
+		    System.out.println(board.getReplyDepth());
+		    request.getRequestDispatcher("/replyPage.jsp").forward(request, response);
 		}
 	}
 
@@ -80,8 +92,9 @@ public class BoardServiceController extends HttpServlet {
 			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
 		} else if (command.equals("replyBoard.do")) {
 			System.out.println("답변 글 생성");
-			
-			
+			ArrayList<BoardDTO> boardList = service.replyAndListAll(request, response);
+			request.setAttribute("boardList", boardList);
+			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
 		}
 	}
 

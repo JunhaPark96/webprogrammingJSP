@@ -125,8 +125,8 @@ public class BoardDAO {
 			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();
 
-			System.out.println("Query executed: " + query);
-			System.out.println("Query parameter: " + id);
+//			System.out.println("Query executed: " + query);
+//			System.out.println("Query parameter: " + id);
 
 			if (rs.next()) {
 				board = new BoardDTO();
@@ -260,8 +260,7 @@ public class BoardDAO {
 		try {
 			conn.setAutoCommit(false);
 			// default를 제외한 새 글 작성 내용 insert
-			String insertQuery = "insert into mvc_board(id, writer, title, content, category, boardLevel, replyDepth) \"\r\n"
-					+ "                + \"VALUES (?, ?, ?, ?, ?, ?, ?)\"";
+			String insertQuery = "insert into mvc_board(id, writer, title, content, category, boardLevel, replyDepth) values (?, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(insertQuery);
             pstmt.setInt(1, newDto.getId());
             pstmt.setString(2, newDto.getWriter());
