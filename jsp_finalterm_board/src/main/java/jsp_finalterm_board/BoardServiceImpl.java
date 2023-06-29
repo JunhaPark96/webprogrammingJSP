@@ -41,15 +41,15 @@ public class BoardServiceImpl implements BoardService {
 		int id = Integer.parseInt(request.getParameter("id"));
 		BoardDTO board = null;
 		System.out.println("request.getParameter(id) : " + request.getParameter("id"));
-		
+
 		board = bDAO.fetchBoardById(id);
 		System.out.println("board: " + bDAO.fetchBoardById(id));
 		bDAO.increaseCount(id);
-		
+
 		request.setAttribute("board", board);
 		return board;
 	}
-	
+
 	public BoardDTO updateBoard(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String writer = request.getParameter("writer");
@@ -63,16 +63,33 @@ public class BoardServiceImpl implements BoardService {
 		bDAO.updateContent(dto);
 		return bDAO.fetchBoardById(id);
 	}
-	
+
 	// 글 삭제
 	public BoardDTO deleteBoard(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
-
 		BoardDTO dto = new BoardDTO();
 		dto.setId(id);
 
 		bDAO.deleteContent(dto);
-		return bDAO.fetchBoardById(id);
+		return dto;
+	}
+
+	// 답글 생성
+	public BoardDTO writeReply(HttpServletRequest request, HttpServletResponse response) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		String writer = request.getParameter("writer");
+		String title = request.getParameter("writer");
+		String content = request.getParameter("content");
+		
+		BoardDTO newDto = new BoardDTO();
+		newDto.setWriter(writer);
+		newDto.setTitle(title);
+		newDto.setContent(content);
+
+		BoardDTO oldDto = bDAO.fetchBoardById(id); // 원본 게시물 가져오기
+
+		bDAO.insertReplyContent(newDto, oldDto);
+		return bDAO.fetchBoardById(newDto.getId()); // 답글 반환
 	}
 
 }

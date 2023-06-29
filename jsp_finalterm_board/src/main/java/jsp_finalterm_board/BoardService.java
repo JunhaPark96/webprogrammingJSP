@@ -18,4 +18,6 @@ public interface BoardService {
 	public BoardDTO updateBoard(HttpServletRequest request, HttpServletResponse response);
 	
 	public BoardDTO deleteBoard(HttpServletRequest request, HttpServletResponse response);
+	
+	public BoardDTO writeReply(HttpServletRequest request, HttpServletResponse response);
 }

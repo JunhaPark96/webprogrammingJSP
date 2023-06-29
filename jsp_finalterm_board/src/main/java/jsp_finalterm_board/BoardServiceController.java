@@ -71,12 +71,17 @@ public class BoardServiceController extends HttpServlet {
 			BoardDTO board = service.updateBoard(request, response);
 			request.setAttribute("board", board);
 			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
+			
 		} else if (command.equals("/deleteBoard.do")) {
 			// 글 삭제
 			System.out.println("보드 삭제-------------------");
 			BoardDTO board = service.deleteBoard(request, response);
 			request.setAttribute("board", board);
 			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
+		} else if (command.equals("replyBoard.do")) {
+			System.out.println("답변 글 생성");
+			
+			
 		}
 	}
 
