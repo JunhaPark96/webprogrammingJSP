@@ -35,7 +35,7 @@ public class BoardServiceController extends HttpServlet {
 
 		// 전체 리스트 표시 메인 페이지
 		if (command.equals("/mainPage.do")) {
-			ArrayList<BoardDTO> boardList = service.listAll(request, response);
+			ArrayList<BoardDTO> boardList = service.sortedListAll(request, response);
 			request.setAttribute("boardList", boardList);
 			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
 		} else if (command.equals("/contentPage.do")) {
@@ -77,6 +77,7 @@ public class BoardServiceController extends HttpServlet {
 			ArrayList<BoardDTO> boardList = service.writeAndListAll(request, response);
 			request.setAttribute("boardList", boardList);
 			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
+			
 		} else if (command.equals("/updateBoard.do")) {
 			// 글 업데이트
 			System.out.println("보드 업데이트-------------------");
@@ -88,9 +89,11 @@ public class BoardServiceController extends HttpServlet {
 			// 글 삭제
 			System.out.println("보드 삭제-------------------");
 			BoardDTO board = service.deleteBoard(request, response);
-			request.setAttribute("board", board);
+			//request.setAttribute("board", board);
 			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
-		} else if (command.equals("replyBoard.do")) {
+			
+		} else if (command.equals("/replyBoard.do")) {
+			// 답변 작성
 			System.out.println("답변 글 생성");
 			ArrayList<BoardDTO> boardList = service.replyAndListAll(request, response);
 			request.setAttribute("boardList", boardList);

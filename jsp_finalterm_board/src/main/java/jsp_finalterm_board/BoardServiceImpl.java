@@ -14,6 +14,11 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<BoardDTO> listAll(HttpServletRequest request, HttpServletResponse response) {
 		return bDAO.listAll();
 	}
+	
+	@Override
+	public ArrayList<BoardDTO> sortedListAll(HttpServletRequest request, HttpServletResponse response) {
+		return bDAO.sortedListAll();
+	}
 
 	@Override
 	public void contentWrite(HttpServletRequest request, HttpServletResponse response) {
@@ -32,7 +37,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public ArrayList<BoardDTO> writeAndListAll(HttpServletRequest request, HttpServletResponse response) {
 		contentWrite(request, response);
-		return listAll(request, response);
+		return sortedListAll(request, response);
 	}
 
 	// 상세 페이지 조회 및 조회 수 증가
@@ -76,7 +81,7 @@ public class BoardServiceImpl implements BoardService {
 
 	// 답글 생성
 	public BoardDTO writeReply(HttpServletRequest request, HttpServletResponse response) {
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter("parentId"));
 		String writer = request.getParameter("writer");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
@@ -95,7 +100,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public ArrayList<BoardDTO> replyAndListAll(HttpServletRequest request, HttpServletResponse response) {
 		writeReply(request, response);
-		return listAll(request, response);
+		return sortedListAll(request, response);
 	}
 
 }

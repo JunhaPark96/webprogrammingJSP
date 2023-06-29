@@ -260,15 +260,14 @@ public class BoardDAO {
 		try {
 			conn.setAutoCommit(false);
 			// default를 제외한 새 글 작성 내용 insert
-			String insertQuery = "insert into mvc_board(id, writer, title, content, category, boardLevel, replyDepth) values (?, ?, ?, ?, ?, ?, ?)";
+			String insertQuery = "insert into mvc_board(writer, title, content, category, boardLevel, replyDepth) values (?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(insertQuery);
-            pstmt.setInt(1, newDto.getId());
-            pstmt.setString(2, newDto.getWriter());
-            pstmt.setString(3, newDto.getTitle());
-            pstmt.setString(4, newDto.getContent());
-            pstmt.setInt(5, OldDto.getId()); // 카테고리는 원본 게시물의 ID로 설정
-            pstmt.setInt(6, OldDto.getBoardLevel() + 1); // 답변 레벨은 원본 게시물의 답변 레벨 + 1
-            pstmt.setInt(7, OldDto.getReplyDepth() + 1); // 답변 깊이는 원본 게시물의 답변 깊이 + 1
+            pstmt.setString(1, newDto.getWriter());
+            pstmt.setString(2, newDto.getTitle());
+            pstmt.setString(3, newDto.getContent());
+            pstmt.setInt(4, OldDto.getId()); // 카테고리는 원본 게시물의 ID로 설정
+            pstmt.setInt(5, OldDto.getBoardLevel() + 1); // 답변 레벨은 원본 게시물의 답변 레벨 + 1
+            pstmt.setInt(6, OldDto.getReplyDepth() + 1); // 답변 깊이는 원본 게시물의 답변 깊이 + 1
 			pstmt.executeUpdate();
 			System.out.println("-----------------------------");
 			System.out.println("답글생성 완료");
@@ -291,5 +290,47 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public ArrayList<BoardDTO> sortedListAll() {
+		ArrayList<BoardDTO> dtos = new ArrayList<BoardDTO>();
+		String query = "select id, writer, title, content, writtendate, views, category, boardlevel, replydepth from ( select id, writer, title, content, writtendate, views, category, boardlevel, replydepth, case when boardlevel = 1 then id else category end as group_id, lpad(' ', (boardlevel-1)*2) || title as display_title from mvc_board start with boardlevel = 1 connect by nocycle prior id = category order siblings by id, writtendate) order by group_id, boardlevel, writtendate, id";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String writer = rs.getString("writer");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				Date writtenDate = rs.getDate("writtenDate");
+				int views = rs.getInt("views");
+				int category = rs.getInt("category");
+				int boardLevel = rs.getInt("boardLevel");
+				int replyDepth = rs.getInt("replyDepth");
+
+				BoardDTO dto = new BoardDTO(id, writer, title, content, writtenDate, views, category, boardLevel,
+						replyDepth);
+				dtos.add(dto);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+					System.out.println("리스트 rs 종료");
+				}
+				if (pstmt != null) {
+					pstmt.close();
+					System.out.println("리스트 pstmt 종료");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dtos;
 	}
 }

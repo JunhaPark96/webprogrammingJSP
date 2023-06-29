@@ -38,14 +38,22 @@ body {
 					</thead>
 					<tbody>
 						<c:forEach var="board" items="${boardList}">
-							<tr>
-								<th scope="row">${board.id}</th>
-								<td>${board.writer}</td>
-								<td><a href="contentPage.do?id=${board.id}">${board.title}</a></td>
-								<td>${board.writtenDate}</td>
-								<td>${board.views}</td>
-							</tr>
-						</c:forEach>
+		<tr>
+			<th scope="row">${board.id}</th>
+			<td>${board.writer}</td>
+			<td>
+				<c:if test="${board.boardLevel > 1}">
+					<c:forEach begin="1" end="${board.boardLevel}">
+						&nbsp;&nbsp;
+					</c:forEach>
+					RE : 
+				</c:if>
+				<a href="contentPage.do?id=${board.id}">${board.title}</a>
+			</td>
+			<td>${board.writtenDate}</td>
+			<td>${board.views}</td>
+		</tr>
+	</c:forEach>
 					</tbody>
 				</table>
 				<a href="newPage.jsp" class="btn btn-primary">새 글작성</a>

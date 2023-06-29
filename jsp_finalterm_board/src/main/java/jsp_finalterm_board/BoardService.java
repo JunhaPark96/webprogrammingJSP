@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public interface BoardService {
 	// 모든 글 목록 조회
 	ArrayList<BoardDTO> listAll(HttpServletRequest request, HttpServletResponse response);
+	
+	ArrayList<BoardDTO> sortedListAll(HttpServletRequest request, HttpServletResponse response);
 	// 새 글 작성
 	public void contentWrite(HttpServletRequest request, HttpServletResponse response);
 	// 글 작성 후 다시 목록 조회
