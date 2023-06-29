@@ -3,6 +3,7 @@ package jsp_finalterm_board;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -102,5 +103,23 @@ public class BoardServiceImpl implements BoardService {
 		writeReply(request, response);
 		return sortedListAll(request, response);
 	}
+	
+	@Override
+	public void deleteBoardAll(HttpServletRequest request, HttpServletResponse response) {
+	    BoardDAO dao = new BoardDAO();
+	    String[] ids = request.getParameterValues("boardId");
+	    List<Integer> idList = new ArrayList<>();
+	    if (ids != null) {
+	        for (String id : ids) {
+	            idList.add(Integer.parseInt(id));
+	            System.out.println(id);
+	        }
+	    } else {
+	        System.out.println("No IDs selected for deletion");
+	        return;
+	    }
+	    dao.deleteBoardAll(idList);
+	}
+
 
 }

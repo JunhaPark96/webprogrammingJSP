@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BoardDAO {
 	private JDBC jdbc;
@@ -262,12 +263,12 @@ public class BoardDAO {
 			// default를 제외한 새 글 작성 내용 insert
 			String insertQuery = "insert into mvc_board(writer, title, content, category, boardLevel, replyDepth) values (?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(insertQuery);
-            pstmt.setString(1, newDto.getWriter());
-            pstmt.setString(2, newDto.getTitle());
-            pstmt.setString(3, newDto.getContent());
-            pstmt.setInt(4, OldDto.getId()); // 카테고리는 원본 게시물의 ID로 설정
-            pstmt.setInt(5, OldDto.getBoardLevel() + 1); // 답변 레벨은 원본 게시물의 답변 레벨 + 1
-            pstmt.setInt(6, OldDto.getReplyDepth() + 1); // 답변 깊이는 원본 게시물의 답변 깊이 + 1
+			pstmt.setString(1, newDto.getWriter());
+			pstmt.setString(2, newDto.getTitle());
+			pstmt.setString(3, newDto.getContent());
+			pstmt.setInt(4, OldDto.getId()); // 카테고리는 원본 게시물의 ID로 설정
+			pstmt.setInt(5, OldDto.getBoardLevel() + 1); // 답변 레벨은 원본 게시물의 답변 레벨 + 1
+			pstmt.setInt(6, OldDto.getReplyDepth() + 1); // 답변 깊이는 원본 게시물의 답변 깊이 + 1
 			pstmt.executeUpdate();
 			System.out.println("-----------------------------");
 			System.out.println("답글생성 완료");
@@ -291,7 +292,8 @@ public class BoardDAO {
 			}
 		}
 	}
-	
+
+	// 답글 정렬 리스트
 	public ArrayList<BoardDTO> sortedListAll() {
 		ArrayList<BoardDTO> dtos = new ArrayList<BoardDTO>();
 		String query = "select id, writer, title, content, writtendate, views, category, boardlevel, replydepth from ( select id, writer, title, content, writtendate, views, category, boardlevel, replydepth, case when boardlevel = 1 then id else category end as group_id, lpad(' ', (boardlevel-1)*2) || title as display_title from mvc_board start with boardlevel = 1 connect by nocycle prior id = category order siblings by id, writtendate) order by group_id, boardlevel, writtendate, id";
@@ -332,5 +334,45 @@ public class BoardDAO {
 			}
 		}
 		return dtos;
+	}
+
+	public void deleteBoardAll(List<Integer> idList) {
+		try {
+			conn.setAutoCommit(false);
+			String query = "delete from mvc_board where id IN (";
+            for (int i = 0; i < idList.size(); i++) {
+                if (i != 0) {
+                    query += ", ";
+                }
+                query += "?";
+            }
+            query += ")";
+			pstmt = conn.prepareStatement(query);
+			
+			for (int i = 0; i < idList.size(); i++) {
+                pstmt.setInt(i+1, idList.get(i));
+            }
+			
+			pstmt.executeUpdate();
+			System.out.println("삭제 성공");
+			conn.commit();
+
+		} catch (SQLException e) {
+			try {
+				System.out.println("삭제 실패: " + e.getMessage());
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

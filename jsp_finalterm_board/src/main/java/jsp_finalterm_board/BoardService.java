@@ -24,4 +24,6 @@ public interface BoardService {
 	public BoardDTO writeReply(HttpServletRequest request, HttpServletResponse response);
 	// 답글 생성 후 목록 조회
 	public ArrayList<BoardDTO> replyAndListAll(HttpServletRequest request, HttpServletResponse response);
+	
+	public void deleteBoardAll(HttpServletRequest request, HttpServletResponse response);
 }

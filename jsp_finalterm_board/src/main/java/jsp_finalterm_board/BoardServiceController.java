@@ -98,6 +98,14 @@ public class BoardServiceController extends HttpServlet {
 			ArrayList<BoardDTO> boardList = service.replyAndListAll(request, response);
 			request.setAttribute("boardList", boardList);
 			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
+			
+		} else if (command.equals("/deleteBoardAll.do")) {
+			System.out.println("선택 row 삭제");
+			service.deleteBoardAll(request, response);
+		    ArrayList<BoardDTO> boardList = service.sortedListAll(request, response);
+		    System.out.println();
+		    request.setAttribute("boardList", boardList);
+			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
 		}
 	}
 
