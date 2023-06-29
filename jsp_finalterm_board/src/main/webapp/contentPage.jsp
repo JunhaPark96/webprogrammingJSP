@@ -52,12 +52,5 @@
             </div>
         </div>
     </div>
-    <c:out value="${board.id}" /> <br/>
-	<c:out value="${board.writer}" /> <br/>
-	<c:out value="${board.title}" /> <br/>
-	<c:out value="${board.content}" /> <br/>
-	<c:out value="${board.writtenDate}" /> <br/>
-	<c:out value="${board.views}" /> <br/>
-<	c:out value="${board}" /> <br/>
 </body>
 </html>

@@ -53,17 +53,31 @@ public class BoardServiceController extends HttpServlet {
 		String uri = request.getRequestURI();
 		String conPath = request.getContextPath();
 		String command = uri.substring(conPath.length());
-
+		
+		System.out.println("-----------------------");
 		System.out.println("uri : " + uri);
 		System.out.println("conPath : " + conPath);
 		System.out.println("command : " + command);
+		System.out.println("-----------------------");
 
 		if (command.equals("/newWriting.do")) {
 			System.out.println("새글작성");
 			ArrayList<BoardDTO> boardList = service.writeAndListAll(request, response);
 			request.setAttribute("boardList", boardList);
 			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
-		} 
+		} else if (command.equals("/updateBoard.do")) {
+			// 글 업데이트
+			System.out.println("보드 업데이트-------------------");
+			BoardDTO board = service.updateBoard(request, response);
+			request.setAttribute("board", board);
+			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
+		} else if (command.equals("/deleteBoard.do")) {
+			// 글 삭제
+			System.out.println("보드 삭제-------------------");
+			BoardDTO board = service.deleteBoard(request, response);
+			request.setAttribute("board", board);
+			request.getRequestDispatcher("/mainPage.jsp").forward(request, response);
+		}
 	}
 
 }

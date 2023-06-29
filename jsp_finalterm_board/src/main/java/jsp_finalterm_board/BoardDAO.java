@@ -91,11 +91,13 @@ public class BoardDAO {
 			pstmt.setInt(1, dto.getId());
 			pstmt.setInt(2, dto.getId());
 			pstmt.executeUpdate();
-
+			System.out.println("----------------------------------------");
+			System.out.println("글 게시 성공");
 			conn.commit();
 
 		} catch (SQLException e) {
 			try {
+				System.out.println("글 게시 실패");
 				conn.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -117,22 +119,26 @@ public class BoardDAO {
 	public BoardDTO fetchBoardById(int id) {
 		BoardDTO board = null;
 		String query = "select * from mvc_board where id = ?";
-	
+
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();
-			
-			System.out.println("Query executed: " + query);  
-		    System.out.println("Query parameter: " + id);  
-			
+
+			System.out.println("Query executed: " + query);
+			System.out.println("Query parameter: " + id);
+
 			if (rs.next()) {
 				board = new BoardDTO();
 				board.setId(rs.getInt("id"));
-				board.setViews(rs.getInt("views"));
 				board.setWriter(rs.getString("writer"));
-                board.setTitle(rs.getString("title"));
-                board.setContent(rs.getString("content"));
+				board.setTitle(rs.getString("title"));
+				board.setContent(rs.getString("content"));
+				board.setWrittenDate(rs.getDate("writtenDate"));
+				board.setViews(rs.getInt("views"));
+				board.setCategory(rs.getInt("category"));
+				board.setBoardLevel(rs.getInt("boardLevel"));
+				board.setReplyDepth(rs.getInt("replyDepth"));
 			}
 
 		} catch (SQLException e) {
@@ -153,7 +159,7 @@ public class BoardDAO {
 		}
 		return board;
 	}
-	
+
 	public void increaseCount(int id) {
 		String query = "update mvc_board set views = views + 1 where id = ?";
 
@@ -162,10 +168,10 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
-			
-			System.out.println("Query executed: " + query);  // 추가
-		    System.out.println("Query parameter: " + id);  // 추가
-			
+
+//			System.out.println("Query executed: " + query); // 추가
+//			System.out.println("Query parameter: " + id); // 추가
+
 			conn.commit();
 		} catch (SQLException e) {
 			try {
@@ -184,4 +190,68 @@ public class BoardDAO {
 		}
 	}
 
+	// 글 수정
+	public void updateContent(BoardDTO dto) {
+		try {
+			conn.setAutoCommit(false);
+			String query = "update mvc_board set writer = ?, title = ?, content = ? where id = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getTitle());
+			pstmt.setString(3, dto.getContent());
+			pstmt.setInt(4, dto.getId());
+			pstmt.executeUpdate();
+			System.out.println("-------------------------------");
+			System.out.println("글 업데이트 성공");
+			conn.commit();
+
+		} catch (SQLException e) {
+			try {
+				System.out.println("-------------------------------");
+				System.out.println("글 업데이트 실패");
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// 글 삭제
+	public void deleteContent(BoardDTO dto) {
+		try {
+			conn.setAutoCommit(false);
+			String query = "delete from mvc_board where id = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, dto.getId());
+			pstmt.executeUpdate();
+			System.out.println("삭제 성공");
+			conn.commit();
+
+		} catch (SQLException e) {
+			try {
+				System.out.println("삭제 실패");
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

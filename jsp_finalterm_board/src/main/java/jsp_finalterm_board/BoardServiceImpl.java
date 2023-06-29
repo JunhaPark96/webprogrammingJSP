@@ -1,5 +1,6 @@
 package jsp_finalterm_board;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -47,6 +48,31 @@ public class BoardServiceImpl implements BoardService {
 		
 		request.setAttribute("board", board);
 		return board;
+	}
+	
+	public BoardDTO updateBoard(HttpServletRequest request, HttpServletResponse response) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		String writer = request.getParameter("writer");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		BoardDTO dto = new BoardDTO();
+		dto.setId(id);
+		dto.setWriter(writer);
+		dto.setTitle(title);
+		dto.setContent(content);
+		bDAO.updateContent(dto);
+		return bDAO.fetchBoardById(id);
+	}
+	
+	// 글 삭제
+	public BoardDTO deleteBoard(HttpServletRequest request, HttpServletResponse response) {
+		int id = Integer.parseInt(request.getParameter("id"));
+
+		BoardDTO dto = new BoardDTO();
+		dto.setId(id);
+
+		bDAO.deleteContent(dto);
+		return bDAO.fetchBoardById(id);
 	}
 
 }
