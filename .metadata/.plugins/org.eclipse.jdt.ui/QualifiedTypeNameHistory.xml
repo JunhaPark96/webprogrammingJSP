@@ -31,16 +31,17 @@
     <fullyQualifiedTypeName name="jakarta.servlet.http.HttpServletResponse"/>
     <fullyQualifiedTypeName name="jsp_21_memberJoin.MemberDAO"/>
     <fullyQualifiedTypeName name="jsp_21_memberJoin.MemberSelectAll"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="jakarta.servlet.RequestDispatcher"/>
     <fullyQualifiedTypeName name="jsp_21_memberJoin.Service"/>
     <fullyQualifiedTypeName name="jsp_21_memberJoin.MemberDTO"/>
     <fullyQualifiedTypeName name="jakarta.servlet.http.HttpSession"/>
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="jsp_finalterm_board.BoardService"/>
     <fullyQualifiedTypeName name="jsp_finalterm_board.BoardServiceImpl"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
     <fullyQualifiedTypeName name="jsp_finalterm_board.BoardDTO"/>
     <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="jsp_finalterm_board.BoardDAO"/>
 </qualifiedTypeNameHistroy>
